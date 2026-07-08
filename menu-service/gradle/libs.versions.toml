@@ -1,0 +1,55 @@
+[versions]
+
+spring-boot = "4.1.0"
+spring-dependency-management = "1.1.7"
+ben-manes = "0.54.0"
+
+flyway = "12.10.0"
+hypersistence = "3.15.4"
+hibernate-jpamodelgen = "6.4.4.Final"
+mapstruct = "1.6.3"
+lombok-mapstruct-binding = "0.2.0"
+springdoc = "3.0.3"
+postgresql = "42.7.13"
+lombok = "1.18.46"
+
+testcontainers = "1.21.4"
+
+[libraries]
+
+# Spring Boot starters
+spring-boot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
+spring-boot-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
+
+# Libraries
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+hypersistence = { module = "io.hypersistence:hypersistence-utils-hibernate-63", version.ref = "hypersistence" }
+
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+
+springdoc = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+hibernate-jpamodelgen = { module = "org.hibernate:hibernate-jpamodelgen", version.ref = "hibernate-jpamodelgen" }
+
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+lombok-mapstruct-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "lombok-mapstruct-binding" }
+
+testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+
+[plugins]
+
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+ben-manes = {id = "com.github.ben-manes.versions", version.ref = "ben-manes"}

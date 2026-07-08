@@ -1,0 +1,26 @@
+INSERT INTO menu.categories (id, name)
+VALUES (1, 'Breakfast'),
+       (2, 'Business Lunch'),
+       (3, 'Seasonal Dishes'),
+       (4, 'Soups'),
+       (5, 'Salads'),
+       (6, 'Appetizers'),
+       (7, 'Main Courses'),
+       (8, 'Grilled Dishes'),
+       (9, 'Pasta & Risotto'),
+       (10, 'Pizza'),
+       (11, 'Fish & Seafood'),
+       (12, 'Meat Dishes'),
+       (13, 'Side Dishes'),
+       (14, 'Desserts'),
+       (15, 'Bakery'),
+       (16, 'Kids Menu'),
+       (17, 'Vegan Menu'),
+       (18, 'Beverages'),
+       (19, 'Coffee & Tea'),
+       (20, 'Cocktails'),
+       (21, 'Alcoholic Beverages'),
+       (22, 'Wines'),
+       (23, 'Specials');
+
+SELECT setval('menu.categories_id_seq', (SELECT MAX(id) FROM menu.categories));

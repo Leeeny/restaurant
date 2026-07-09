@@ -1,8 +1,11 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     java
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.dependency.management)
     alias(libs.plugins.ben.manes)
+    alias(libs.plugins.openapi)
 }
 
 group = "ru.leeeny"
@@ -35,6 +38,7 @@ dependencies {
     // implementation(libs.hypersistence) //TODO: что-то с ним решить
     implementation(libs.mapstruct)
     implementation(libs.springdoc)
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
     compileOnly(libs.lombok)
     compileOnly(libs.mapstruct)
@@ -54,4 +58,96 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+/*
+______________________________________
+============ API GENERATION ==========
+______________________________________
+ */
+
+val openApiDir = file("${rootDir}/openapi")
+val foundSpecifications = openApiDir.listFiles { file -> file.extension in listOf("yaml", "yml") }
+    ?: emptyArray()
+
+logger.lifecycle(
+    "Found ${foundSpecifications.size} specifications: " +
+            foundSpecifications.joinToString { it.name })
+
+foundSpecifications.forEach { specFile ->
+    val specName = specFile.nameWithoutExtension
+    val outDir = generatedSourcesDir(specName)
+    val taskName = buildGenerateApiTaskName(specName)
+    val basePackage = "ru.leeeny.menuservice"   // ← жёстко тот же пакет, что у Entity
+
+    logger.lifecycle("Register task $taskName for $specName -> $basePackage")
+
+    tasks.register(taskName, GenerateTask::class.java) {
+        generatorName.set("spring")
+        inputSpec.set(specFile.invariantSeparatorsPath)
+        outputDir.set(outDir)
+
+        configOptions.set(
+            mapOf(
+                "interfaceOnly" to "true",
+                "skipDefaultInterface" to "true",
+                "useSpringBoot3" to "true",
+                "useJakartaEe" to "true",
+                "useBeanValidation" to "true",
+                "openApiNullable" to "true",
+                "dateLibrary" to "java8",
+                "useTags" to "true",
+                "hideGenerationTimestamp" to "true",
+                "apiPackage" to "$basePackage.api",
+                "modelPackage" to "$basePackage.dto"
+            )
+        )
+
+        doFirst {
+            logger.lifecycle("$taskName: starting generation from ${specFile.name}")
+        }
+    }
+}
+
+fun generatedSourcesDir(specName: String): Provider<String> =
+    layout.buildDirectory
+        .dir("generated/openapi/$specName")
+        .map { it.asFile.invariantSeparatorsPath }
+
+fun defineJavaPackageName(name: String): String {
+    val beforeDash = name.substringBefore("-")
+    val match = Regex("^[a-z]+").find(beforeDash)
+    return (match?.value ?: beforeDash).lowercase()
+}
+
+fun toPascalCase(name: String): String =
+    name.split(Regex("[-_]+"))
+        .filter { it.isNotEmpty() }
+        .joinToString("") { it.replaceFirstChar(Char::uppercase) }
+
+fun buildTaskName(prefix: String, name: String): String = "$prefix-${toPascalCase(name)}"
+fun buildGenerateApiTaskName(name: String) = buildTaskName("generate", name)
+fun buildJarTaskName(name: String) = buildTaskName("jar", name)
+
+val specNames = foundSpecifications.map { it.nameWithoutExtension }
+
+sourceSets.named("main") {
+    specNames.forEach { specName ->
+        java.srcDir(
+            layout.buildDirectory.dir("generated/openapi/$specName/src/main/java")
+        )
+    }
+}
+
+tasks.register("generateAllOpenApi") {
+    specNames.forEach { specName ->
+        dependsOn(buildGenerateApiTaskName(specName))
+    }
+    doLast {
+        logger.lifecycle("generateAllOpenApi: all specifications have been generated")
+    }
+}
+
+tasks.named("compileJava") {
+    dependsOn("generateAllOpenApi")
 }

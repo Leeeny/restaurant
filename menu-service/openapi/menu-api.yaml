@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: Menu API
+  description: Menu API for interacting with the Menu service
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8091'
+paths:
+  /v1/menu-items/{id}:
+    patch:
+      summary: Patch update for menu position
+      operationId: "update"
+      tags:
+        - MenuItem
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMenuRequest'
+      responses:
+        '200':
+          description: Successfully uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItemResponse'
+        '400':
+          description: Incorrect request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: The access token is missing or invalid
+        '403':
+          description: Not have enough rights for the operation
+        '404':
+          description: The menu item with the specified id was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MenuItemResponse:
+      type: object
+      required:
+        [
+          id,
+          name,
+          description,
+          active,
+          price,
+          categoryId,
+          cookTimeMinutes,
+          weightGrams,
+          createdAt,
+          updatedAt
+        ]
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        price:
+          type: number
+        categoryId:
+          type: integer
+          format: int64
+        cookTimeMinutes:
+          type: integer
+          format: int32
+        weightGrams:
+          type: number
+        imageUrl:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UpdateMenuRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+        active:
+          type: boolean
+        price:
+          type: number
+          format: double
+          minimum: 0
+          exclusiveMinimum: true
+        categoryId:
+          type: integer
+          format: int64
+        cookTimeMinutes:
+          type: integer
+          format: int32
+          minimum: 0
+        weightGrams:
+          type: number
+          format: double
+          minimum: 0
+          exclusiveMinimum: true
+        imageUrl:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer

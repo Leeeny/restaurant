@@ -3,6 +3,7 @@
 spring-boot = "4.1.0"
 spring-dependency-management = "1.1.7"
 ben-manes = "0.54.0"
+openapi = "7.13.0"
 
 flyway = "12.10.0"
 hypersistence = "3.15.4"
@@ -53,3 +54,4 @@ testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
 ben-manes = {id = "com.github.ben-manes.versions", version.ref = "ben-manes"}
+openapi = { id = "org.openapi.generator", version.ref = "openapi" }

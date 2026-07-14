@@ -1,7 +1,8 @@
-/*
-package ru.leeeny.menuservice;
+package ru.leeeny.menuservice.testcontainers;
 
 import org.springframework.boot.SpringApplication;
+import ru.leeeny.menuservice.MenuServiceApplication;
+import ru.leeeny.menuservice.testcontainers.config.TestcontainersConfiguration;
 
 public class TestMenuServiceApplication {
 
@@ -10,4 +11,3 @@ public class TestMenuServiceApplication {
 	}
 
 }
-*/

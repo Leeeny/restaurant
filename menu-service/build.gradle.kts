@@ -38,7 +38,8 @@ dependencies {
     // implementation(libs.hypersistence) //TODO: что-то с ним решить
     implementation(libs.mapstruct)
     implementation(libs.springdoc)
-    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    implementation(libs.jackson.databind.nullable)
+    implementation(libs.spring.boot.data.jpa.test)
 
     compileOnly(libs.lombok)
     compileOnly(libs.mapstruct)
@@ -83,6 +84,8 @@ foundSpecifications.forEach { specFile ->
     logger.lifecycle("Register task $taskName for $specName -> $basePackage")
 
     tasks.register(taskName, GenerateTask::class.java) {
+        description = "Generates the Open API sources for $specName"
+        group = "openapi"
         generatorName.set("spring")
         inputSpec.set(specFile.invariantSeparatorsPath)
         outputDir.set(outDir)
@@ -140,6 +143,8 @@ sourceSets.named("main") {
 }
 
 tasks.register("generateAllOpenApi") {
+    group = "openapi"
+    description = "Generates the OpenAPI sources for all specifications"
     specNames.forEach { specName ->
         dependsOn(buildGenerateApiTaskName(specName))
     }

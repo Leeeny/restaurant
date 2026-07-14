@@ -13,6 +13,7 @@ lombok-mapstruct-binding = "0.2.0"
 springdoc = "3.0.3"
 postgresql = "42.7.13"
 lombok = "1.18.46"
+openapi-jackson-databind-nullable = "0.2.6"
 
 testcontainers = "1.21.4"
 
@@ -27,6 +28,7 @@ spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test
 spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
 spring-boot-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
+spring-boot-data-jpa-test = { module = "org.springframework.boot:spring-boot-data-jpa-test" }
 
 # Libraries
 flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
@@ -36,6 +38,7 @@ mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 
 springdoc = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+jackson-databind-nullable = { module = "org.openapitools:jackson-databind-nullable", version.ref = "openapi-jackson-databind-nullable" }
 
 hibernate-jpamodelgen = { module = "org.hibernate:hibernate-jpamodelgen", version.ref = "hibernate-jpamodelgen" }
 

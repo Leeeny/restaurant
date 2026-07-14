@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Menu API
+  description: Menu API for interacting with the Menu service
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8091'
+
+tags:
+  - name: MenuItem
+  - name: MenuCategory
+  - name: Ingredient
+
+paths:
+  /v1/menu-items:
+    $ref: 'paths/menu.yaml#/menuItems'
+  /v1/menu-items/{id}:
+    $ref: 'paths/menu.yaml#/menuItemById'
+  /v1/menu-categories/{categoryId}/menu-items:
+    $ref: 'paths/menu.yaml#/menuItemsByCategory'
+  /v1/menu-items/{menuItemId}/ingredients:
+    $ref: 'paths/menu.yaml#/menuItemWithIngredients'
+  /v1/menu-items/{menuItemId}/ingredients/{ingredientId}:
+    $ref: 'paths/menu.yaml#/menuItemIngredient'
+
+  /v1/menu-categories:
+    $ref: 'paths/category.yaml#/menuCategories'
+  /v1/menu-categories/{id}:
+    $ref: 'paths/category.yaml#/menuCategoryById'
+
+  /v1/ingredients:
+    $ref: 'paths/ingredient.yaml#/ingredients'
+  /v1/ingredients/{id}:
+    $ref: 'paths/ingredient.yaml#/ingredientById'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MenuItemResponse:
+      $ref: 'components/schemas.yaml#/MenuItemResponse'
+    MenuItemPageResponse:
+      $ref: 'components/schemas.yaml#/MenuItemPageResponse'
+    CreateMenuItemRequest:
+      $ref: 'components/schemas.yaml#/CreateMenuItemRequest'
+    UpdateMenuRequest:
+      $ref: 'components/schemas.yaml#/UpdateMenuRequest'
+    SortBy:
+      $ref: 'components/schemas.yaml#/SortBy'
+
+    MenuCategoryResponse:
+      $ref: 'components/schemas.yaml#/MenuCategoryResponse'
+    MenuCategoryPageResponse:
+      $ref: 'components/schemas.yaml#/MenuCategoryPageResponse'
+    CreateMenuCategoryRequest:
+      $ref: 'components/schemas.yaml#/CreateMenuCategoryRequest'
+    UpdateMenuCategoryRequest:
+      $ref: 'components/schemas.yaml#/UpdateMenuCategoryRequest'
+
+    IngredientResponse:
+      $ref: 'components/schemas.yaml#/IngredientResponse'
+    IngredientPageResponse:
+      $ref: 'components/schemas.yaml#/IngredientPageResponse'
+    CreateIngredientRequest:
+      $ref: 'components/schemas.yaml#/CreateIngredientRequest'
+    UpdateIngredientRequest:
+      $ref: 'components/schemas.yaml#/UpdateIngredientRequest'
+
+    ErrorResponse:
+      $ref: 'components/schemas.yaml#/ErrorResponse'
+
+  responses:
+    BadRequest:
+      $ref: 'components/responses.yaml#/BadRequest'
+    Unauthorized:
+      $ref: 'components/responses.yaml#/Unauthorized'
+    Forbidden:
+      $ref: 'components/responses.yaml#/Forbidden'
+    NotFound:
+      $ref: 'components/responses.yaml#/NotFound'
+    Conflict:
+      $ref: 'components/responses.yaml#/Conflict'
+    NoContent:
+      $ref: 'components/responses.yaml#/NoContent'
+
+  parameters:
+    IdPathParam:
+      $ref: 'components/parameters.yaml#/IdPathParam'
+    CategoryIdPathParam:
+      $ref: 'components/parameters.yaml#/CategoryIdPathParam'
+    CategoryIdFilterParam:
+      $ref: 'components/parameters.yaml#/CategoryIdFilterParam'
+    ActiveFilterParam:
+      $ref: 'components/parameters.yaml#/ActiveFilterParam'
+    NameFilterParam:
+      $ref: 'components/parameters.yaml#/NameFilterParam'
+    PageParam:
+      $ref: 'components/parameters.yaml#/PageParam'
+    SizeParam:
+      $ref: 'components/parameters.yaml#/SizeParam'
+    SortByParam:
+      $ref: 'components/parameters.yaml#/SortByParam'

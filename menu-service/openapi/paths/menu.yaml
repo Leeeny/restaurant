@@ -1,0 +1,267 @@
+menuItems:
+  post:
+    summary: Create a new menu item
+    operationId: createMenuItem
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/CreateMenuItemRequest'
+    responses:
+      '201':
+        description: Menu item successfully created
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '409':
+        $ref: '../components/responses.yaml#/Conflict'
+
+  get:
+    summary: Get a list of menu items
+    operationId: getMenuItems
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/CategoryIdFilterParam'
+      - $ref: '../components/parameters.yaml#/ActiveFilterParam'
+      - $ref: '../components/parameters.yaml#/PageParam'
+      - $ref: '../components/parameters.yaml#/SizeParam'
+    responses:
+      '200':
+        description: List of menu items
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemPageResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+
+menuItemById:
+  get:
+    summary: Get a menu item by id
+    operationId: getMenuItemById
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    responses:
+      '200':
+        description: Successfully retrieved
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemResponse'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  patch:
+    summary: Patch update for menu position
+    operationId: updateMenuItem
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/UpdateMenuRequest'
+    responses:
+      '200':
+        description: Successfully uploaded
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  delete:
+    summary: Delete a menu item by id
+    operationId: deleteMenuItem
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    responses:
+      '204':
+        $ref: '../components/responses.yaml#/NoContent'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+menuItemsByCategory:
+  get:
+    summary: Возвращает список блюд указанной категории, отсортированный согласно sortBy
+    operationId: getMenuItemsByCategory
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/CategoryIdPathParam'
+      - $ref: '../components/parameters.yaml#/SortByParam'
+    responses:
+      '200':
+        description: List of menu items for the category
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/MenuItemResponse'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+menuItemWithIngredients:
+  get:
+    summary: Get ingredients of a menu item
+    operationId: getMenuItemIngredients
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/MenuItemIdPathParam'
+    responses:
+      '200':
+        description: Ingredients of the menu item
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemIngredientPageResponse'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  post:
+    summary: Add ingredient to a menu item
+    operationId: addIngredientToMenuItem
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/MenuItemIdPathParam'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/CreateMenuItemIngredientRequest'
+    responses:
+      '201':
+        description: Ingredient successfully added
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemIngredientResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+      '409':
+        $ref: '../components/responses.yaml#/Conflict'
+
+
+menuItemIngredient:
+  patch:
+    summary: Update ingredient weight in menu item
+    operationId: updateMenuItemIngredient
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/MenuItemIdPathParam'
+      - $ref: '../components/parameters.yaml#/IngredientIdPathParam'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/UpdateMenuItemIngredientRequest'
+    responses:
+      '200':
+        description: Successfully updated
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuItemIngredientResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  delete:
+    summary: Remove ingredient from menu item
+    operationId: removeIngredientFromMenuItem
+    tags:
+      - MenuItem
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/MenuItemIdPathParam'
+      - $ref: '../components/parameters.yaml#/IngredientIdPathParam'
+    responses:
+      '204':
+        $ref: '../components/responses.yaml#/NoContent'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'

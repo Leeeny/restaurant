@@ -1,0 +1,128 @@
+menuCategories:
+  post:
+    summary: Create a new menu category
+    operationId: createMenuCategory
+    tags:
+      - MenuCategory
+    security:
+      - bearerAuth: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/CreateMenuCategoryRequest'
+    responses:
+      '201':
+        description: Menu category successfully created
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuCategoryResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '409':
+        $ref: '../components/responses.yaml#/Conflict'
+
+  get:
+    summary: Get a list of menu categories
+    operationId: getMenuCategories
+    tags:
+      - MenuCategory
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/ActiveFilterParam'
+      - $ref: '../components/parameters.yaml#/PageParam'
+      - $ref: '../components/parameters.yaml#/SizeParam'
+    responses:
+      '200':
+        description: List of menu categories
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuCategoryPageResponse'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+
+menuCategoryById:
+  get:
+    summary: Get a menu category by id
+    operationId: getMenuCategoryById
+    tags:
+      - MenuCategory
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    responses:
+      '200':
+        description: Successfully retrieved
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuCategoryResponse'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  patch:
+    summary: Patch update for a menu category
+    operationId: updateMenuCategory
+    tags:
+      - MenuCategory
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/UpdateMenuCategoryRequest'
+    responses:
+      '200':
+        description: Successfully updated
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/MenuCategoryResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  delete:
+    summary: Delete a menu category by id
+    operationId: deleteMenuCategory
+    tags:
+      - MenuCategory
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - $ref: '../components/parameters.yaml#/IdPathParam'
+    responses:
+      '204':
+        $ref: '../components/responses.yaml#/NoContent'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        $ref: '../components/responses.yaml#/Forbidden'
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+      '409':
+        $ref: '../components/responses.yaml#/Conflict'

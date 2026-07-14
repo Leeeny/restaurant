@@ -1,0 +1,29 @@
+BadRequest:
+  description: Incorrect request data
+  content:
+    application/json:
+      schema:
+        $ref: 'schemas.yaml#/ErrorResponse'
+
+Unauthorized:
+  description: The access token is missing or invalid
+
+Forbidden:
+  description: Not have enough rights for the operation
+
+NotFound:
+  description: The requested resource was not found
+  content:
+    application/json:
+      schema:
+        $ref: 'schemas.yaml#/ErrorResponse'
+
+Conflict:
+  description: The resource conflicts with an already existing one
+  content:
+    application/json:
+      schema:
+        $ref: 'schemas.yaml#/ErrorResponse'
+
+NoContent:
+  description: Successfully deleted

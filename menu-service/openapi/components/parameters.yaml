@@ -1,0 +1,86 @@
+IdPathParam:
+  in: path
+  name: id
+  required: true
+  schema:
+    type: integer
+    format: int64
+
+CategoryIdPathParam:
+  in: path
+  name: categoryId
+  required: true
+  schema:
+    type: integer
+    format: int64
+
+CategoryIdFilterParam:
+  in: query
+  name: categoryId
+  required: false
+  schema:
+    type: integer
+    format: int64
+
+ActiveFilterParam:
+  in: query
+  name: active
+  required: false
+  schema:
+    type: boolean
+
+NameFilterParam:
+  in: query
+  name: name
+  required: false
+  description: Optional filter by (partial) name
+  schema:
+    type: string
+
+PageParam:
+  in: query
+  name: page
+  required: false
+  schema:
+    type: integer
+    format: int32
+    minimum: 0
+    default: 0
+
+SizeParam:
+  in: query
+  name: size
+  required: false
+  schema:
+    type: integer
+    format: int32
+    minimum: 1
+    default: 20
+
+SortByParam:
+  in: query
+  name: sortBy
+  required: false
+  schema:
+    $ref: 'schemas.yaml#/SortBy'
+    default: AZ
+
+MenuItemIdPathParam:
+  name: menuItemId
+  in: path
+  required: true
+  description: Menu item identifier
+  schema:
+    type: integer
+    format: int64
+    minimum: 1
+
+IngredientIdPathParam:
+  name: ingredientId
+  in: path
+  required: true
+  description: Ingredient identifier
+  schema:
+    type: integer
+    format: int64
+    minimum: 1

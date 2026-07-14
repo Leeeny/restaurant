@@ -2,6 +2,7 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
     java
+    idea
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.dependency.management)
     alias(libs.plugins.ben.manes)
@@ -103,6 +104,12 @@ foundSpecifications.forEach { specFile ->
                 "hideGenerationTimestamp" to "true",
                 "apiPackage" to "$basePackage.api",
                 "modelPackage" to "$basePackage.dto"
+            )
+        )
+
+        schemaMappings.set(
+            mapOf(
+                "SortBy" to "$basePackage.dto.SortBy"
             )
         )
 

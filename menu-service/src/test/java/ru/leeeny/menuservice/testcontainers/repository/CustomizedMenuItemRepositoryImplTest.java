@@ -11,13 +11,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.leeeny.menuservice.dto.SortBy;
-import ru.leeeny.menuservice.dto.UpdateMenuRequest;
+import ru.leeeny.menuservice.dto.SortByEnum;
+import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.repository.MenuItemRepository;
 import ru.leeeny.menuservice.repository.updaters.MenuAttrUpdaters;
 import ru.leeeny.menuservice.testcontainers.config.TestcontainersConfiguration;
 import ru.leeeny.menuservice.testcontainers.config.util.TestData;
+import ru.leeeny.menuservice.testcontainers.config.util.TransactionOpener;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ import static org.springframework.test.util.ReflectionTestUtils.getField;
 		executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
 )
 
-@Import({MenuAttrUpdaters.class, TestcontainersConfiguration.class})
+@Import({MenuAttrUpdaters.class, TestcontainersConfiguration.class, TransactionOpener.class})
 class CustomizedMenuItemRepositoryImplTest {
 
 	@Autowired
@@ -49,12 +50,17 @@ class CustomizedMenuItemRepositoryImplTest {
 	@Autowired
 	private EntityManager em;
 
+	@Autowired
+	private TransactionOpener transactionOpener;
+
 	@Test
 	void updateMenu_updatesMenu_whenAllUpdateFieldsAreSet() {
 		var dto = TestData.updateMenuFullRequest();
 		var id = getIdByName("Cappuccino");
 
-		int updateCount = menuItemRepository.updateMenuItem(id, dto);
+		int updateCount = transactionOpener.runInNewTransaction(
+				() -> menuItemRepository.updateMenuItem(id, dto)
+		);
 
 		assertThat(updateCount).isEqualTo(1);
 		MenuItem updated = menuItemRepository.findById(id).get();
@@ -71,7 +77,9 @@ class CustomizedMenuItemRepositoryImplTest {
 		var id = getIdByName("Cappuccino");
 		MenuItem before = menuItemRepository.findById(id).get();
 
-		int updateCount = menuItemRepository.updateMenuItem(id, dto);
+		int updateCount = transactionOpener.runInNewTransaction(
+				() -> menuItemRepository.updateMenuItem(id, dto)
+		);
 
 		assertThat(updateCount).isEqualTo(1);
 		MenuItem updated = menuItemRepository.findById(id).get();
@@ -91,13 +99,15 @@ class CustomizedMenuItemRepositoryImplTest {
 
 	@Test
 	void updateMenu_throwsDataIntegrityViolationException_whenNameIsNotUnique() {
-		var dto = new UpdateMenuRequest();
+		var dto = new UpdateMenuItemDto();
 		dto.setName("Homemade Lemonade"); // уже занято id=33
 		var id = getIdByName("Fresh Orange Juice"); // id=32
 
 		assertThrows(
 				DataIntegrityViolationException.class,
-				() -> menuItemRepository.updateMenuItem(id, dto)
+				() -> transactionOpener.runInNewTransaction(
+						() -> menuItemRepository.updateMenuItem(id, dto)
+				)
 		);
 	}
 
@@ -106,7 +116,9 @@ class CustomizedMenuItemRepositoryImplTest {
 		var dto = TestData.updateMenuFullRequest();
 		long nonExistentId = 9999L;
 
-		int updateCount = menuItemRepository.updateMenuItem(nonExistentId, dto);
+		int updateCount = transactionOpener.runInNewTransaction(
+				() -> menuItemRepository.updateMenuItem(nonExistentId, dto)
+		);
 
 		assertThat(updateCount).isZero();
 		assertThat(menuItemRepository.findById(nonExistentId)).isEmpty();
@@ -120,7 +132,7 @@ class CustomizedMenuItemRepositoryImplTest {
 		Long beveragesCategoryId = 18L; // Fresh Orange Juice (220.00), Homemade Lemonade (200.00)
 
 		List<MenuItem> result = menuItemRepository
-				.getMenusFor(beveragesCategoryId, SortBy.PRICE_ASC);
+				.getMenusFor(beveragesCategoryId, SortByEnum.PRICE_ASC);
 
 		assertThat(result)
 				.extracting(MenuItem::getName)
@@ -153,7 +165,6 @@ class CustomizedMenuItemRepositoryImplTest {
 					"Unsupported type for price/weightGrams comparison: " + value);
 		};
 	}
-
 
 	private <T, R> void assertFieldsExistence(T item, R dto, String... fields) {
 		boolean itemFieldsMissing = Arrays.stream(fields)

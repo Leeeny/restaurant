@@ -7,9 +7,8 @@ import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.leeeny.menuservice.dto.SortBy;
-import ru.leeeny.menuservice.dto.UpdateMenuRequest;
+import ru.leeeny.menuservice.dto.SortByEnum;
+import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuCategory_;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.entity.MenuItem_;
@@ -27,8 +26,7 @@ public class CustomizedMenuItemRepositoryImpl implements CustomizedMenuItemRepos
 	private final List<MenuAttrUpdater<?>> updaters;
 
 	@Override
-	@Transactional
-	public Integer updateMenuItem(Long id, UpdateMenuRequest dto) {
+	public Integer updateMenuItem(Long id, UpdateMenuItemDto dto) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaUpdate<MenuItem> update = cb.createCriteriaUpdate(MenuItem.class);
 		Root<MenuItem> root = update.from(MenuItem.class);
@@ -38,16 +36,14 @@ public class CustomizedMenuItemRepositoryImpl implements CustomizedMenuItemRepos
 	}
 
 	@Override
-	public List<MenuItem> getMenusFor(Long categoryId, SortBy sortBy) {
+	public List<MenuItem> getMenusFor(Long categoryId, SortByEnum sortByEnum) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<MenuItem> selectQuery = cb.createQuery(MenuItem.class);
 		Root<MenuItem> root = selectQuery.from(MenuItem.class);
 		selectQuery
 				.select(root)
 				.where(cb.equal(root.get(MenuItem_.menuCategory).get(MenuCategory_.id), categoryId))
-				.orderBy(sortBy.getOrder(cb, root));
+				.orderBy(sortByEnum.getOrder(cb, root));
 		return em.createQuery(selectQuery).getResultList();
 	}
-
-
 }

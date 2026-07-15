@@ -16,17 +16,26 @@ import ru.leeeny.menuservice.exception.MenuServiceException;
 import java.util.function.Function;
 
 @AllArgsConstructor
-public enum SortBy {
+public enum SortByEnum {
 
 	AZ(root -> root.get(MenuItem_.name), Direction.ASC),
+
 	ZA(root -> root.get(MenuItem_.name), Direction.DESC),
+
 	PRICE_ASC(root -> root.get(MenuItem_.price), Direction.ASC),
+
 	PRICE_DESC(root -> root.get(MenuItem_.price), Direction.DESC),
+
 	WEIGHT_ASC(root -> root.get(MenuItem_.weightGrams), Direction.ASC),
+
 	WEIGHT_DESC(root -> root.get(MenuItem_.weightGrams), Direction.DESC),
+
 	DATE_ASC(root -> root.get(MenuItem_.created), Direction.ASC),
+
 	DATE_DESC(root -> root.get(MenuItem_.created), Direction.DESC),
+
 	CATEGORY_ASC(root -> root.join(MenuItem_.menuCategory).get(MenuCategory_.name), Direction.ASC),
+
 	CATEGORY_DESC(root -> root.join(MenuItem_.menuCategory).get(MenuCategory_.name), Direction.DESC);
 
 	private final Function<Root<MenuItem>, Expression<? extends Comparable<?>>> pathExpression;
@@ -40,9 +49,9 @@ public enum SortBy {
 	}
 
 	@JsonCreator
-	public static SortBy fromString(String str) {
+	public static SortByEnum fromString(String str) {
 		try {
-			return SortBy.valueOf(str.toUpperCase());
+			return SortByEnum.valueOf(str.toUpperCase());
 		} catch (IllegalArgumentException _) {
 			var msg = "Failed to create SortBy from string6 %s".formatted(str);
 			throw new MenuServiceException(msg, HttpStatus.BAD_REQUEST);

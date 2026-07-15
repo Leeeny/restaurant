@@ -107,11 +107,11 @@ foundSpecifications.forEach { specFile ->
             )
         )
 
-        schemaMappings.set(
-            mapOf(
-                "SortBy" to "$basePackage.dto.SortBy"
-            )
-        )
+//        schemaMappings.set(
+//            mapOf(
+//                "SortBy" to "$basePackage.dto.SortBy"
+//            )
+//        )
 
         doFirst {
             logger.lifecycle("$taskName: starting generation from ${specFile.name}")

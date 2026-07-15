@@ -1,7 +1,7 @@
 package ru.leeeny.menuservice.repository;
 
-import ru.leeeny.menuservice.dto.SortBy;
-import ru.leeeny.menuservice.dto.UpdateMenuRequest;
+import ru.leeeny.menuservice.dto.SortByEnum;
+import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuItem;
 
 import java.util.List;
@@ -20,10 +20,10 @@ public interface CustomizedMenuItemRepository {
 	 * @param dto полученный объект с полями для обновления
 	 * @return количество обновленных строк
 	 */
-	Integer updateMenuItem(Long id, UpdateMenuRequest dto);
+	Integer updateMenuItem(Long id, UpdateMenuItemDto dto);
 
 	/**
 	 * Возвращает список блюд указанной категории, отсортированный согласно {@code sortBy}
 	 */
-	List<MenuItem> getMenusFor(Long categoryId, SortBy sortBy);
+	List<MenuItem> getMenusFor(Long categoryId, SortByEnum sortByEnum);
 }

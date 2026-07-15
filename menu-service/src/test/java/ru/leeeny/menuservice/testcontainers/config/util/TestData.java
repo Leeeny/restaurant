@@ -1,26 +1,28 @@
 package ru.leeeny.menuservice.testcontainers.config.util;
 
-import ru.leeeny.menuservice.dto.UpdateMenuRequest;
+import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
+
+import java.math.BigDecimal;
 
 public class TestData {
 
-	public static UpdateMenuRequest updateMenuFullRequest() {
-		UpdateMenuRequest updateMenuRequest = new UpdateMenuRequest();
+	public static UpdateMenuItemDto updateMenuFullRequest() {
+		UpdateMenuItemDto updateMenuRequest = new UpdateMenuItemDto();
 		updateMenuRequest.setName("New Cappuccino");
 		updateMenuRequest.setDescription("New Cappuccino Description");
-		updateMenuRequest.setPrice(2D);
+		updateMenuRequest.setPrice(BigDecimal.valueOf(2D));
 		updateMenuRequest.setCookTimeMinutes(5);
-		updateMenuRequest.setWeightGrams(150D);
+		updateMenuRequest.setWeightGrams(BigDecimal.valueOf(150D));
 		updateMenuRequest.setImageUrl("http://images.com/new_cappuccino.png");
 		updateMenuRequest.setActive(true);
 		updateMenuRequest.setCategoryId(19L);
 		return updateMenuRequest;
 	}
 
-	public static UpdateMenuRequest updateMenuPartialRequest() {
-		UpdateMenuRequest updateMenuRequest = new UpdateMenuRequest();
+	public static UpdateMenuItemDto updateMenuPartialRequest() {
+		UpdateMenuItemDto updateMenuRequest = new UpdateMenuItemDto();
 		updateMenuRequest.setName("New Cappuccino");
-		updateMenuRequest.setPrice(3D);
+		updateMenuRequest.setPrice(BigDecimal.valueOf(3D));
 		return updateMenuRequest;
 	}
 

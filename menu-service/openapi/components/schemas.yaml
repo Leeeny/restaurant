@@ -161,11 +161,6 @@ MenuItemIngredientResponse:
       type: number
       format: double
 
-    weightGrams:
-      type: number
-      format: double
-
-
 MenuItemIngredientPageResponse:
   type: object
   required:
@@ -397,6 +392,12 @@ UpdateIngredientRequest:
       minimum: 0
 
   additionalProperties: false
+
+IngredientSortBy:
+  type: string
+  enum:
+    - AZ
+    - ZA
 
 # ---------------------------------------------------------------------------
 # Общие

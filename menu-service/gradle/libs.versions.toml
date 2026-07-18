@@ -29,6 +29,7 @@ spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-te
 spring-boot-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
 spring-boot-data-jpa-test = { module = "org.springframework.boot:spring-boot-data-jpa-test" }
+spring-boot-webtestclient = { module = "org.springframework.boot:spring-boot-webtestclient" }
 
 # Libraries
 flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }

@@ -6,9 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import ru.leeeny.menuservice.dto.CreateMenuItemDto;
 import ru.leeeny.menuservice.dto.MenuItemDto;
-import ru.leeeny.menuservice.dto.SortByEnum;
+import ru.leeeny.menuservice.dto.SortMenu;
 import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.exception.MenuServiceException;
@@ -122,28 +126,35 @@ class MenuServiceImplTest {
 	}
 
 	@Test
-	void getMenuItems_returnsMappedList() {
-		List<MenuItem> entities = List.of(menuItem);
-		List<MenuItemDto> dtos = List.of(menuItemDto);
-		when(menuItemRepository.findAll()).thenReturn(entities);
-		when(menuItemMapper.toDtos(entities)).thenReturn(dtos);
+	void getMenuItems_returnsMappedPage() {
+		Pageable pageable = PageRequest.of(0, 10);
 
-		List<MenuItemDto> result = menuService.getMenuItems();
+		Page<MenuItem> page = new PageImpl<>(List.of(menuItem), pageable, 1);
 
-		assertThat(result).isEqualTo(dtos);
+		when(menuItemRepository.findAll(pageable)).thenReturn(page);
+		when(menuItemMapper.toDto(menuItem)).thenReturn(menuItemDto);
+
+		Page<MenuItemDto> result = menuService.getMenuItems(pageable, true);
+
+		assertThat(result.getContent()).containsExactly(menuItemDto);
+		assertThat(result.getTotalElements()).isEqualTo(1);
+
+		verify(menuItemRepository).findAll(pageable);
+		verify(menuItemMapper).toDto(menuItem);
 	}
 
 	@Test
 	void getMenuItemsForCategory_returnsMappedListForGivenSort() {
-		SortByEnum sortBy = SortByEnum.PRICE_ASC;
+		SortMenu sortBy = SortMenu.PRICE_ASC;
+		Pageable pageable = PageRequest.of(0, 10);
 		List<MenuItem> entities = List.of(menuItem);
 		List<MenuItemDto> dtos = List.of(menuItemDto);
-		when(menuItemRepository.getMenusFor(5L, sortBy)).thenReturn(entities);
+		when(menuItemRepository.getMenusFor(5L, sortBy, pageable)).thenReturn(entities);
 		when(menuItemMapper.toDtos(entities)).thenReturn(dtos);
 
-		List<MenuItemDto> result = menuService.getMenuItemsForCategory(5L, sortBy);
+		List<MenuItemDto> result = menuService.getMenuItemsForCategory(5L, sortBy, pageable);
 
 		assertThat(result).isEqualTo(dtos);
-		verify(menuItemRepository).getMenusFor(5L, sortBy);
+		verify(menuItemRepository).getMenusFor(5L, sortBy, pageable);
 	}
 }

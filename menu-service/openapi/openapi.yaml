@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.1
 info:
   title: Menu API
   description: Menu API for interacting with the Menu service
@@ -42,65 +42,65 @@ components:
 
   schemas:
     MenuItemResponse:
-      $ref: 'components/schemas.yaml#/MenuItemResponse'
+      $ref: '#/components/schemas/MenuItemResponse'
     MenuItemPageResponse:
-      $ref: 'components/schemas.yaml#/MenuItemPageResponse'
+      $ref: '#/components/schemas/MenuItemPageResponse'
     CreateMenuItemRequest:
-      $ref: 'components/schemas.yaml#/CreateMenuItemRequest'
+      $ref: '#/components/schemas/CreateMenuItemRequest'
     UpdateMenuRequest:
-      $ref: 'components/schemas.yaml#/UpdateMenuRequest'
+      $ref: '#/components/schemas/UpdateMenuRequest'
     SortBy:
-      $ref: 'components/schemas.yaml#/SortBy'
+      $ref: '#/components/schemas/SortBy'
 
     MenuCategoryResponse:
-      $ref: 'components/schemas.yaml#/MenuCategoryResponse'
+      $ref: '#/components/schemas/MenuCategoryResponse'
     MenuCategoryPageResponse:
-      $ref: 'components/schemas.yaml#/MenuCategoryPageResponse'
+      $ref: '#/components/schemas/MenuCategoryPageResponse'
     CreateMenuCategoryRequest:
-      $ref: 'components/schemas.yaml#/CreateMenuCategoryRequest'
+      $ref: '#/components/schemas/CreateMenuCategoryRequest'
     UpdateMenuCategoryRequest:
-      $ref: 'components/schemas.yaml#/UpdateMenuCategoryRequest'
+      $ref: '#/components/schemas/UpdateMenuCategoryRequest'
 
     IngredientResponse:
-      $ref: 'components/schemas.yaml#/IngredientResponse'
+      $ref: '#/components/schemas/IngredientResponse'
     IngredientPageResponse:
-      $ref: 'components/schemas.yaml#/IngredientPageResponse'
+      $ref: '#/components/schemas/IngredientPageResponse'
     CreateIngredientRequest:
-      $ref: 'components/schemas.yaml#/CreateIngredientRequest'
+      $ref: '#/components/schemas/CreateIngredientRequest'
     UpdateIngredientRequest:
-      $ref: 'components/schemas.yaml#/UpdateIngredientRequest'
+      $ref: '#/components/schemas/UpdateIngredientRequest'
 
     ErrorResponse:
-      $ref: 'components/schemas.yaml#/ErrorResponse'
+      $ref: '#/components/schemas/ErrorResponse'
 
   responses:
     BadRequest:
-      $ref: 'components/responses.yaml#/BadRequest'
+      $ref: '#/components/responses/BadRequest'
     Unauthorized:
-      $ref: 'components/responses.yaml#/Unauthorized'
+      $ref: '#/components/responses/Unauthorized'
     Forbidden:
-      $ref: 'components/responses.yaml#/Forbidden'
+      $ref: '#/components/responses/Forbidden'
     NotFound:
-      $ref: 'components/responses.yaml#/NotFound'
+      $ref: '#/components/responses/NotFound'
     Conflict:
-      $ref: 'components/responses.yaml#/Conflict'
+      $ref: '#/components/responses/Conflict'
     NoContent:
-      $ref: 'components/responses.yaml#/NoContent'
+      $ref: '#/components/responses/NoContent'
 
   parameters:
     IdPathParam:
-      $ref: 'components/parameters.yaml#/IdPathParam'
+      $ref: '#/components/parameters/IdPathParam'
     CategoryIdPathParam:
-      $ref: 'components/parameters.yaml#/CategoryIdPathParam'
+      $ref: '#/components/parameters/CategoryIdPathParam'
     CategoryIdFilterParam:
-      $ref: 'components/parameters.yaml#/CategoryIdFilterParam'
+      $ref: '#/components/parameters/CategoryIdFilterParam'
     ActiveFilterParam:
-      $ref: 'components/parameters.yaml#/ActiveFilterParam'
+      $ref: '#/components/parameters/ActiveFilterParam'
     NameFilterParam:
-      $ref: 'components/parameters.yaml#/NameFilterParam'
+      $ref: '#/components/parameters/NameFilterParam'
     PageParam:
-      $ref: 'components/parameters.yaml#/PageParam'
+      $ref: '#/components/parameters/PageParam'
     SizeParam:
-      $ref: 'components/parameters.yaml#/SizeParam'
+      $ref: '#/components/parameters/SizeParam'
     SortByParam:
-      $ref: 'components/parameters.yaml#/SortByParam'
+      $ref: '#/components/parameters/SortByParam'

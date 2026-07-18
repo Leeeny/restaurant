@@ -7,11 +7,13 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.leeeny.menuservice.dto.SortByEnum;
+import ru.leeeny.menuservice.dto.SortMenu;
 import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.repository.MenuItemRepository;
@@ -131,8 +133,10 @@ class CustomizedMenuItemRepositoryImplTest {
 	void getMenusFor_returnsListSortedByPriceAsc_forBeveragesCategory() {
 		Long beveragesCategoryId = 18L; // Fresh Orange Juice (220.00), Homemade Lemonade (200.00)
 
+		Pageable pageable = PageRequest.of(0, 10);
+
 		List<MenuItem> result = menuItemRepository
-				.getMenusFor(beveragesCategoryId, SortByEnum.PRICE_ASC);
+				.getMenusFor(beveragesCategoryId, SortMenu.PRICE_ASC, pageable);
 
 		assertThat(result)
 				.extracting(MenuItem::getName)

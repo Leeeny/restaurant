@@ -65,6 +65,14 @@ SortByParam:
     $ref: 'schemas.yaml#/SortBy'
     default: AZ
 
+IngredientSortByParam:
+  in: query
+  name: sortBy
+  required: false
+  schema:
+    $ref: 'schemas.yaml#/IngredientSortBy'
+    default: AZ
+
 MenuItemIdPathParam:
   name: menuItemId
   in: path

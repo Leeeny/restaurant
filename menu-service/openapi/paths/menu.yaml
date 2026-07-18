@@ -139,15 +139,17 @@ menuItemsByCategory:
     parameters:
       - $ref: '../components/parameters.yaml#/CategoryIdPathParam'
       - $ref: '../components/parameters.yaml#/SortByParam'
+      - $ref: '../components/parameters.yaml#/PageParam'
+      - $ref: '../components/parameters.yaml#/SizeParam'
     responses:
       '200':
         description: List of menu items for the category
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '../components/schemas.yaml#/MenuItemResponse'
+              $ref: '../components/schemas.yaml#/MenuItemPageResponse'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
       '401':
         $ref: '../components/responses.yaml#/Unauthorized'
       '403':
@@ -165,6 +167,9 @@ menuItemWithIngredients:
       - bearerAuth: [ ]
     parameters:
       - $ref: '../components/parameters.yaml#/MenuItemIdPathParam'
+      - $ref: '../components/parameters.yaml#/PageParam'
+      - $ref: '../components/parameters.yaml#/SizeParam'
+      - $ref: '../components/parameters.yaml#/IngredientSortByParam'
     responses:
       '200':
         description: Ingredients of the menu item

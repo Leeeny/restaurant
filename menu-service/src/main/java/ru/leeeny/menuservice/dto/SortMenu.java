@@ -16,7 +16,7 @@ import ru.leeeny.menuservice.exception.MenuServiceException;
 import java.util.function.Function;
 
 @AllArgsConstructor
-public enum SortByEnum {
+public enum SortMenu {
 
 	AZ(root -> root.get(MenuItem_.name), Direction.ASC),
 
@@ -49,9 +49,9 @@ public enum SortByEnum {
 	}
 
 	@JsonCreator
-	public static SortByEnum fromString(String str) {
+	public static SortMenu fromString(String str) {
 		try {
-			return SortByEnum.valueOf(str.toUpperCase());
+			return SortMenu.valueOf(str.toUpperCase());
 		} catch (IllegalArgumentException _) {
 			var msg = "Failed to create SortBy from string6 %s".formatted(str);
 			throw new MenuServiceException(msg, HttpStatus.BAD_REQUEST);

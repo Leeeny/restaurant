@@ -2,10 +2,12 @@ package ru.leeeny.menuservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.leeeny.menuservice.dto.IngredientDto;
+import ru.leeeny.menuservice.dto.IngredientSortBy;
 import ru.leeeny.menuservice.entity.Ingredient;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.entity.MenuItemIngredient;
@@ -67,8 +69,8 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
 	}
 
 	@Override
-	public List<IngredientDto> getIngredients(Long menuId) {
-		return ingredientMapper.toDtos(ingredientRepository.getIngredientsByMenuId(menuId));
+	public List<IngredientDto> getIngredients(Long menuId, IngredientSortBy sortBy, Pageable pageable) {
+		return ingredientMapper.toDtos(ingredientRepository.getIngredientsByMenuId(menuId, sortBy, pageable));
 	}
 
 	@Override

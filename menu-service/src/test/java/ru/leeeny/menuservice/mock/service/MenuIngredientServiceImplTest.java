@@ -7,7 +7,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import ru.leeeny.menuservice.dto.IngredientDto;
+import ru.leeeny.menuservice.dto.IngredientSortBy;
 import ru.leeeny.menuservice.entity.Ingredient;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.entity.MenuItemIngredient;
@@ -135,10 +138,11 @@ class MenuIngredientServiceImplTest {
 	void getIngredients_returnsMappedList() {
 		List<Ingredient> ingredients = List.of(ingredient);
 		List<IngredientDto> dtos = List.of(ingredientDto);
-		when(ingredientRepository.getIngredientsByMenuId(1L)).thenReturn(ingredients);
+		Pageable pageable = PageRequest.of(0, 10);
+		when(ingredientRepository.getIngredientsByMenuId(1L, IngredientSortBy.AZ, pageable)).thenReturn(ingredients);
 		when(ingredientMapper.toDtos(ingredients)).thenReturn(dtos);
 
-		List<IngredientDto> result = menuIngredientService.getIngredients(1L);
+		List<IngredientDto> result = menuIngredientService.getIngredients(1L, IngredientSortBy.AZ, pageable);
 
 		assertThat(result).isEqualTo(dtos);
 	}

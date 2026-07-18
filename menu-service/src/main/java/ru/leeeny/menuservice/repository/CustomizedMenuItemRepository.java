@@ -1,6 +1,7 @@
 package ru.leeeny.menuservice.repository;
 
-import ru.leeeny.menuservice.dto.SortByEnum;
+import org.springframework.data.domain.Pageable;
+import ru.leeeny.menuservice.dto.SortMenu;
 import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
 import ru.leeeny.menuservice.entity.MenuItem;
 
@@ -25,5 +26,5 @@ public interface CustomizedMenuItemRepository {
 	/**
 	 * Возвращает список блюд указанной категории, отсортированный согласно {@code sortBy}
 	 */
-	List<MenuItem> getMenusFor(Long categoryId, SortByEnum sortByEnum);
+	List<MenuItem> getMenusFor(Long categoryId, SortMenu sortMenu, Pageable pageable);
 }

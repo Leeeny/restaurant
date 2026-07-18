@@ -56,6 +56,7 @@ dependencies {
     testImplementation(libs.testcontainers.junit)
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.spring.boot.webflux)
+    testImplementation(libs.spring.boot.webtestclient)
 }
 
 tasks.withType<Test> {
@@ -98,12 +99,14 @@ foundSpecifications.forEach { specFile ->
                 "useSpringBoot3" to "true",
                 "useJakartaEe" to "true",
                 "useBeanValidation" to "true",
-                "openApiNullable" to "true",
+                "openApiNullable" to "false", //TODO: версии spring boot и jacksonNullable не совместимы
+                "useOptional" to "true", //TODO: потом убрать
                 "dateLibrary" to "java8",
                 "useTags" to "true",
                 "hideGenerationTimestamp" to "true",
                 "apiPackage" to "$basePackage.api",
-                "modelPackage" to "$basePackage.dto"
+                "modelPackage" to "$basePackage.dto",
+                "useOneOfInterfaces" to "true"
             )
         )
 

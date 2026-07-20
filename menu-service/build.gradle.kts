@@ -63,6 +63,12 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
+    imageName.set(project.name)
+
+    environment.put("BP_JVM_VERSION", "25")
+}
+
 /*
 ______________________________________
 ============ API GENERATION ==========

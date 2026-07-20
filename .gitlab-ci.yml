@@ -1,0 +1,35 @@
+stages:
+  - build
+  - test
+  - deploy
+
+default:
+  image: eclipse-temurin:25-jdk
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+
+build-job:
+  stage: build
+  script:
+    - cd menu-service
+    - chmod +x gradlew
+    - ./gradlew clean assemble
+
+test-job:
+  stage: test
+  script:
+    - cd menu-service
+    - chmod +x gradlew
+    - ./gradlew test
+
+deploy-job:
+  stage: deploy
+  environment: production
+  script:
+    - echo "Развертывание приложения..."
+    - echo "Приложение развернуто."

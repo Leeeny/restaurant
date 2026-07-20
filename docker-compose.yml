@@ -1,4 +1,24 @@
 services:
+  menu-service:
+    image: menu-service # в сервисе запустить gradle bootBuildImage
+    container_name: "menu-service"
+    depends_on:
+      menu-postgres:
+        condition: service_healthy
+    ports:
+      - "8091:8091"
+    environment:
+      POSTGRES_HOST: menu-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: menu-user
+      POSTGRES_PASSWORD: menu1234
+    healthcheck:
+      test: [ "CMD", "curl", "-i", "http://localhost:8091/actuator/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+
   menu-postgres:
     image: postgres:17
     container_name: menu-postgres

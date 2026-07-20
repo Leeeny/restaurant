@@ -14,9 +14,11 @@ import ru.leeeny.menuservice.dto.CreateMenuItemDto;
 import ru.leeeny.menuservice.dto.MenuItemDto;
 import ru.leeeny.menuservice.dto.SortMenu;
 import ru.leeeny.menuservice.dto.UpdateMenuItemDto;
+import ru.leeeny.menuservice.entity.MenuCategory;
 import ru.leeeny.menuservice.entity.MenuItem;
 import ru.leeeny.menuservice.exception.MenuServiceException;
 import ru.leeeny.menuservice.mapper.MenuItemMapper;
+import ru.leeeny.menuservice.repository.CategoryRepository;
 import ru.leeeny.menuservice.repository.MenuItemRepository;
 import ru.leeeny.menuservice.service.impl.MenuServiceImpl;
 
@@ -39,6 +41,9 @@ class MenuServiceImplTest {
 	@Mock
 	private MenuItemMapper menuItemMapper;
 
+	@Mock
+	private CategoryRepository categoryRepository;
+
 	@InjectMocks
 	private MenuServiceImpl menuService;
 
@@ -54,13 +59,19 @@ class MenuServiceImplTest {
 	@Test
 	void createMenuItem_shouldSaveEntityAndReturnDto() {
 		CreateMenuItemDto createDto = mock(CreateMenuItemDto.class);
+		MenuCategory category = mock(MenuCategory.class);
+
+		when(createDto.getCategoryId()).thenReturn(1L);
 		when(menuItemMapper.toEntity(createDto)).thenReturn(menuItem);
+		when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
 		when(menuItemRepository.save(menuItem)).thenReturn(menuItem);
 		when(menuItemMapper.toDto(menuItem)).thenReturn(menuItemDto);
 
 		MenuItemDto result = menuService.createMenuItem(createDto);
 
 		assertThat(result).isEqualTo(menuItemDto);
+
+		verify(menuItem).setMenuCategory(category);
 		verify(menuItemRepository).save(menuItem);
 	}
 

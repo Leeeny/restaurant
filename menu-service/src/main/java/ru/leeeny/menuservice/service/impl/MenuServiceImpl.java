@@ -34,7 +34,12 @@ public class MenuServiceImpl implements MenuService {
 	public MenuItemDto createMenuItem(CreateMenuItemDto dto) {
 		MenuItem menuItem = menuItemMapper.toEntity(dto);
 
-		MenuCategory category = categoryRepository.getReferenceById(dto.getCategoryId());
+		MenuCategory category = categoryRepository.findById(dto.getCategoryId())
+				.orElseThrow(() ->
+						new MenuServiceException(
+								"Category with id=%d for menu item not found".formatted(dto.getCategoryId()),
+								HttpStatus.NOT_FOUND)
+				);
 		menuItem.setMenuCategory(category);
 
 		return menuItemMapper.toDto(

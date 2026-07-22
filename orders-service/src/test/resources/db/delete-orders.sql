@@ -1,0 +1,2 @@
+delete
+from orders.orders;

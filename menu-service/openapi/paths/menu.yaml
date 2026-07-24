@@ -54,6 +54,33 @@ menuItems:
       '403':
         $ref: '../components/responses.yaml#/Forbidden'
 
+menuInfo:
+  post:
+    summary: Get menu info for order
+    description: Returns price and availability info for a set of menu item names
+    operationId: getMenusForOrder
+    tags:
+      - MenuItem
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/OrderMenuRequest'
+    responses:
+      '200':
+        description: Successfully retrieved menu info
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/OrderMenuResponse'
+      '400':
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/ProblemDetail'
+
 menuItemById:
   get:
     summary: Get a menu item by id

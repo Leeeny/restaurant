@@ -399,6 +399,57 @@ IngredientSortBy:
     - AZ
     - ZA
 
+OrderMenuRequest:
+  type: object
+  required:
+    - menuNames
+  properties:
+    menuNames:
+      type: array
+      uniqueItems: true
+      minItems: 1
+      items:
+        type: string
+
+OrderMenuResponse:
+  type: object
+  required:
+    - menuInfos
+  properties:
+    menuInfos:
+      type: array
+      items:
+        $ref: '#/MenuInfo'
+
+MenuInfo:
+  type: object
+  properties:
+    name:
+      type: string
+    price:
+      type: number
+      format: double
+    isAvailable:
+      type: boolean
+
+ProblemDetail:
+  type: object
+  description: RFC 7807 problem detail
+  properties:
+    type:
+      type: string
+      format: uri
+    title:
+      type: string
+    status:
+      type: integer
+    detail:
+      type: string
+    instance:
+      type: string
+      format: uri
+
+
 # ---------------------------------------------------------------------------
 # Общие
 # ---------------------------------------------------------------------------

@@ -22,6 +22,8 @@ paths:
     $ref: 'paths/menu.yaml#/menuItemWithIngredients'
   /v1/menu-items/{menuItemId}/ingredients/{ingredientId}:
     $ref: 'paths/menu.yaml#/menuItemIngredient'
+  /v1/menu-info:
+    $ref: 'paths/menu.yaml#/menuInfo'
 
   /v1/menu-categories:
     $ref: 'paths/category.yaml#/menuCategories'
@@ -34,12 +36,6 @@ paths:
     $ref: 'paths/ingredient.yaml#/ingredientById'
 
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
   schemas:
     MenuItemResponse:
       $ref: '#/components/schemas/MenuItemResponse'

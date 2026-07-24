@@ -1,6 +1,7 @@
 package ru.leeeny.menuservice.rest.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import ru.leeeny.menuservice.dto.MenuItemIngredientPageResponse;
 import ru.leeeny.menuservice.dto.MenuItemIngredientResponse;
 import ru.leeeny.menuservice.dto.MenuItemPageResponse;
 import ru.leeeny.menuservice.dto.MenuItemResponse;
+import ru.leeeny.menuservice.dto.OrderMenuRequest;
+import ru.leeeny.menuservice.dto.OrderMenuResponse;
 import ru.leeeny.menuservice.dto.SortBy;
 import ru.leeeny.menuservice.dto.SortMenu;
 import ru.leeeny.menuservice.dto.UpdateMenuItemIngredientRequest;
@@ -29,6 +32,7 @@ import ru.leeeny.menuservice.service.MenuService;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MenuItemController implements MenuItemApi {
@@ -179,5 +183,12 @@ public class MenuItemController implements MenuItemApi {
 
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(menuItemIngredientMapper.toRestDto(responseDto));
+	}
+
+	@Override
+	public ResponseEntity<OrderMenuResponse> getMenusForOrder(OrderMenuRequest orderMenuRequest) {
+		log.info("Received request to GET menus with names: {}", orderMenuRequest.getMenuNames());
+		return ResponseEntity
+				.ok(menuService.getMenusForOrder(orderMenuRequest));
 	}
 }

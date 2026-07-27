@@ -37,7 +37,7 @@ dependencies {
 
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$springdocVersion")
 
-    implementation("org.flywaydb:flyway-core:$flywayVersion")
+    // implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
 
     implementation("org.postgresql:postgresql:$postgresqlVersion")

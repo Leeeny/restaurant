@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 public class MenuLineItem {
 
 	private String menuItemName;
+
 	private BigDecimal price;
+
 	private Integer quantity;
 }

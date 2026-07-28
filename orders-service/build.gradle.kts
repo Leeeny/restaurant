@@ -72,4 +72,5 @@ tasks.named<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("boot
     imageName.set(project.name)
 
     environment.put("BP_JVM_VERSION", "25")
+    environment.put("BP_HEALTH_CHECKER_ENABLED", "true")
 }

@@ -12,12 +12,11 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: menu-user
       POSTGRES_PASSWORD: menu1234
-  #    healthcheck:
-  #      test: [ "CMD", "curl", "-i", "http://localhost:8091/actuator/health" ]
-  #      interval: 5s
-  #      timeout: 5s
-  #      retries: 30
-
+    healthcheck:
+      test: [ "CMD", "/workspace/health-check" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   menu-postgres:
     image: postgres:17
@@ -30,11 +29,30 @@ services:
       - ./infrastructure/databases/menu:/docker-entrypoint-initdb.d:ro
     ports:
       - "5434:5432"
-  #    healthcheck:
-  #      test: [ "CMD-SHELL", "pg_isready -U postgres -p 5432" ]
-  #      interval: 10s
-  #      timeout: 5s
-  #      retries: 20
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U menu-user -p 5432" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  order-service:
+    image: orders-service # в сервисе запустить gradle bootBuildImage
+    container_name: "orders-service"
+    depends_on:
+      order-postgres:
+        condition: service_healthy
+    ports:
+      - "8092:8092"
+    environment:
+      POSTGRES_HOST: order-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: order-user
+      POSTGRES_PASSWORD: order1234
+    healthcheck:
+      test: [ "CMD", "/workspace/health-check" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   order-postgres:
     image: postgres:17
@@ -47,8 +65,8 @@ services:
       - ./infrastructure/databases/order:/docker-entrypoint-initdb.d:ro
     ports:
       - "5435:5432"
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U postgres -p 5432" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 20
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U order-user -p 5432" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20

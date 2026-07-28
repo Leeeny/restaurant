@@ -20,7 +20,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.serviceUnavailable;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static ru.leeeny.ordersservice.testdata.TestConstants.DELAY_MILLIS;
 import static ru.leeeny.ordersservice.testdata.TestConstants.MENU_INFO_PATH;
 import static ru.leeeny.ordersservice.testdata.TestDataProvider.readPartiallySuccessfulResponse;
 import static ru.leeeny.ordersservice.testdata.TestDataProvider.readSuccessfulResponse;
@@ -62,7 +61,7 @@ public class BaseIntegrationTest {
 	protected void prepareStubForSuccessWithTimeout() {
 		var responseBody = readSuccessfulResponse();
 		wiremock.stubFor(post(MENU_INFO_PATH)
-				.willReturn(okJson(responseBody).withFixedDelay(DELAY_MILLIS))
+				.willReturn(okJson(responseBody).withFixedDelay(3000))
 		);
 	}
 

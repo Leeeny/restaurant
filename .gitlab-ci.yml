@@ -19,6 +19,9 @@ build-job:
     - cd menu-service
     - chmod +x gradlew
     - ./gradlew clean assemble
+    - cd ../orders-service
+    - chmod +x gradlew
+    - ./gradlew clean assemble
 
 test-job:
   stage: test
@@ -26,6 +29,11 @@ test-job:
     - cd menu-service
     - chmod +x gradlew
     - ./gradlew test
+    - cd ../orders-service
+    - chmod +x gradlew
+    - ./gradlew test
+  needs:
+    - build-job
 
 deploy-job:
   stage: deploy
@@ -33,3 +41,5 @@ deploy-job:
   script:
     - echo "Развертывание приложения..."
     - echo "Приложение развернуто."
+  needs:
+    - test-job

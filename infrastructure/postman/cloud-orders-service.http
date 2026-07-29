@@ -1,0 +1,111 @@
+# cloud-java-orders-service
+
+###
+# @name create menu one Copy
+POST http://localhost:9091/v1/menu-items
+Content-Type: application/json
+
+{
+  "name": "One",
+  "description": "Nice Item One",
+  "price": 10.10,
+  "category": "drinks",
+  "timeToCook": 1000,
+  "weight": 10.20,
+  "imageUrl": "http://images.com/one.png",
+  "ingredientCollection": {
+    "ingredients": [
+      {
+        "name": "ingredient one",
+        "calories": 10
+      },
+      {
+        "name": "ingredient two",
+        "calories": 20
+      }
+    ]
+  }
+}
+
+###
+# @name get menu for Category DRINKS Copy
+GET http://localhost:9091/v1/menu-items?
+    category=DRINKS
+
+###
+# @name get menu not-found Copy
+GET http://localhost:9091/v1/menu-items/1000
+
+###
+# @name create menu two Copy
+POST http://localhost:9091/v1/menu-items
+Content-Type: application/json
+
+{
+  "name": "Two",
+  "description": "Nice Item Two",
+  "price": 10.10,
+  "category": "drinks",
+  "timeToCook": 1000,
+  "weight": 20.20,
+  "imageUrl": "http://images.com/two.png",
+  "ingredientCollection": {
+    "ingredients": [
+      {
+        "name": "ingredient one",
+        "calories": 10
+      },
+      {
+        "name": "ingredient two",
+        "calories": 20
+      }
+    ]
+  }
+}
+
+###
+# @name create menu three Copy
+POST http://localhost:9091/v1/menu-items
+Content-Type: application/json
+
+{
+  "name": "Three",
+  "description": "Nice Item Three",
+  "price": 10.10,
+  "category": "drinks",
+  "timeToCook": 1000,
+  "weight": 30.20,
+  "imageUrl": "http://images.com/three.png",
+  "ingredientCollection": {
+    "ingredients": [
+      {
+        "name": "ingredient one",
+        "calories": 10
+      },
+      {
+        "name": "ingredient two",
+        "calories": 20
+      }
+    ]
+  }
+}
+
+###
+# @name Submit order for One Two Three Copy
+POST http://localhost:9092/v1/menu-orders
+X-User-Name: Alex
+Content-Type: application/json
+
+{
+  "nameToQuantity": {
+    "One": 10,
+    "Two": 20,
+    "Three": 30
+  },
+  "address": {
+    "city": "Moscow",
+    "street": "Street",
+    "house": 1,
+    "apartment": 1
+  }
+}

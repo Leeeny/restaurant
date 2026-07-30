@@ -15,7 +15,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
 	@Query("""
 			SELECT new ru.leeeny.reviewsservice.entity.MenuRatingInfo(
-			r.menuId, r.wilsonScore, r.avgStars) FROM Rating r where r.menuId =: menuId
+			r.menuId, r.wilsonScore, r.avgStars) FROM Rating r where r.menuId = :menuId
 			""")
 	Optional<MenuRatingInfo> findRatingInfoByMenuId(@Param("menuId") Long menuId);
 

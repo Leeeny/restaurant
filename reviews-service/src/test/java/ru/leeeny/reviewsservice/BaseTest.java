@@ -1,11 +1,15 @@
 package ru.leeeny.reviewsservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import ru.leeeny.reviewsservice.config.TransactionOpener;
+import ru.leeeny.reviewsservice.entity.MenuRatingInfo;
 import ru.leeeny.reviewsservice.entity.Rating;
 import ru.leeeny.reviewsservice.repository.RatingRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static ru.leeeny.reviewsservice.testutil.TestUtils.incrementExpectedRating;
@@ -19,10 +23,14 @@ import static ru.leeeny.reviewsservice.testutil.TestUtils.incrementExpectedRatin
 		scripts = "classpath:db/delete-data.sql",
 		executionPhase = AFTER_TEST_METHOD
 )
+@Import(TransactionOpener.class)
 public abstract class BaseTest {
 
 	@Autowired
 	protected RatingRepository ratingRepository;
+
+	@Autowired
+	protected TransactionOpener transactionOpener;
 
 	protected void incrementRatingsForMenuId(Rating expected,
 	                                         int oneTimes,
@@ -51,7 +59,17 @@ public abstract class BaseTest {
 	                                      Integer rating,
 	                                      int times) {
 		for (int i = 0; i < times; i++) {
-			ratingRepository.incrementRating(menuId, rating);
+			transactionOpener.runInNewTransaction(() -> {
+				ratingRepository.incrementRating(menuId, rating);
+				return null;
+			});
 		}
+	}
+
+	protected void compareDefaultMenuInfo(Long noRatingMenu, MenuRatingInfo rating) {
+		Float zero = 0.0f;
+		assertThat(rating.getAvgStars()).isEqualTo(zero);
+		assertThat(rating.getWilsonScore()).isEqualTo(zero);
+		assertThat(rating.getMenuId()).isEqualTo(noRatingMenu);
 	}
 }

@@ -1,5 +1,6 @@
 package ru.leeeny.reviewsservice.testutil;
 
+import ru.leeeny.reviewsservice.dto.CreateReviewRequest;
 import ru.leeeny.reviewsservice.entity.Rating;
 
 import java.util.List;
@@ -55,5 +56,13 @@ public class TestData {
 				ratingMenuSeven(),
 				ratingMenuEight()
 		);
+	}
+
+	public static CreateReviewRequest createReviewRequest(Long menuId, Integer rate) {
+		return CreateReviewRequest.builder()
+				.menuId(menuId)
+				.comment("This is a comment")
+				.rate(rate)
+				.build();
 	}
 }

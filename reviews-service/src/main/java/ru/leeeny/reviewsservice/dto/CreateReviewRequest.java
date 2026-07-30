@@ -3,12 +3,16 @@ package ru.leeeny.reviewsservice.dto;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.leeeny.reviewsservice.validation.NullOrNotBlank;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateReviewRequest {
 
 	@Positive(message = "Идентификатор блюда должен быть > 0")

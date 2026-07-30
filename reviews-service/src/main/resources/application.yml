@@ -10,7 +10,9 @@ server:
 
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import:
+      - optional:file:.env[.properties]
+      - classpath:openapi-descriptions.yml
   application:
     name: reviews-service
   lifecycle:

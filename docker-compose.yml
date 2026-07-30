@@ -71,6 +71,25 @@ services:
       timeout: 5s
       retries: 20
 
+  reviews-service:
+    image: reviews-service # в сервисе запустить gradle bootBuildImage
+    container_name: "reviews-service"
+    depends_on:
+      review-postgres:
+        condition: service_healthy
+    ports:
+      - "8093:8093"
+    environment:
+      POSTGRES_HOST: review-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: review-user
+      POSTGRES_PASSWORD: review1234
+    healthcheck:
+      test: [ "CMD", "/workspace/health-check" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
   review-postgres:
     image: postgres:17
     container_name: review-postgres

@@ -22,6 +22,9 @@ build-job:
     - cd ../orders-service
     - chmod +x gradlew
     - ./gradlew clean assemble
+    - cd ../reviews-service
+    - chmod +x gradlew
+    - ./gradlew clean assemble
 
 test-job:
   stage: test
@@ -30,6 +33,9 @@ test-job:
     - chmod +x gradlew
     - ./gradlew test
     - cd ../orders-service
+    - chmod +x gradlew
+    - ./gradlew test
+    - cd ../reviews-service
     - chmod +x gradlew
     - ./gradlew test
   needs:

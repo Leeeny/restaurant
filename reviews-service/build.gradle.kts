@@ -29,11 +29,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-flyway")
+    implementation("org.springframework.boot:spring-boot-data-jpa-test")
 
     implementation("org.flywaydb:flyway-database-postgresql:${flywayVersion}")
-
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
-
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapi")
 
     compileOnly("org.projectlombok:lombok")

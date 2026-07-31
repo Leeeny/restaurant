@@ -1,0 +1,14 @@
+server:
+  port: 8094
+  shutdown: graceful
+  tomcat:
+    connection-timeout: 3s
+    keep-alive-timeout: 20s
+    threads:
+      max: 200
+      min-spare: 10
+
+
+spring:
+  application:
+    name: menu-aggregate-service

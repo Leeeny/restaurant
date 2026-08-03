@@ -1,0 +1,74 @@
+[
+  {
+    "id": 3,
+    "name": "Three",
+    "description": "Nice Item Three",
+    "price": 10.1,
+    "category": "DRINKS",
+    "timeToCook": 1000,
+    "weight": 30.2,
+    "imageUrl": "http://images.com/three.png",
+    "updatedAt": "2024-03-20T11:01:37.942606",
+    "createdAt": "2024-03-20T11:01:37.942576",
+    "ingredientCollection": {
+      "ingredients": [
+        {
+          "name": "ingredient one",
+          "calories": 10
+        },
+        {
+          "name": "ingredient two",
+          "calories": 20
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "name": "Two",
+    "description": "Nice Item Two",
+    "price": 10.1,
+    "category": "DRINKS",
+    "timeToCook": 1000,
+    "weight": 20.2,
+    "imageUrl": "http://images.com/two.png",
+    "updatedAt": "2024-03-20T11:01:34.574555",
+    "createdAt": "2024-03-20T11:01:34.574508",
+    "ingredientCollection": {
+      "ingredients": [
+        {
+          "name": "ingredient one",
+          "calories": 10
+        },
+        {
+          "name": "ingredient two",
+          "calories": 20
+        }
+      ]
+    }
+  },
+  {
+    "id": 1,
+    "name": "One",
+    "description": "Nice Item One",
+    "price": 10.1,
+    "category": "DRINKS",
+    "timeToCook": 1000,
+    "weight": 10.2,
+    "imageUrl": "http://images.com/one.png",
+    "updatedAt": "2024-03-20T11:01:30.043025",
+    "createdAt": "2024-03-20T11:01:30.042833",
+    "ingredientCollection": {
+      "ingredients": [
+        {
+          "name": "ingredient one",
+          "calories": 10
+        },
+        {
+          "name": "ingredient two",
+          "calories": 20
+        }
+      ]
+    }
+  }
+]

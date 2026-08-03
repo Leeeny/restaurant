@@ -1,0 +1,49 @@
+{
+  "reviews": [
+    {
+      "id": 1,
+      "menuId": 1,
+      "createdBy": "Alex",
+      "comment": "Comment",
+      "rate": 5,
+      "createdAt": "2024-03-20T11:01:48.178558"
+    },
+    {
+      "id": 7,
+      "menuId": 1,
+      "createdBy": "John",
+      "comment": "Comment",
+      "rate": 4,
+      "createdAt": "2024-03-20T11:02:17.491651"
+    },
+    {
+      "id": 8,
+      "menuId": 1,
+      "createdBy": "Michael",
+      "comment": "Comment",
+      "rate": 3,
+      "createdAt": "2024-03-20T11:02:21.307757"
+    },
+    {
+      "id": 9,
+      "menuId": 1,
+      "createdBy": "Max",
+      "comment": "Comment",
+      "rate": 2,
+      "createdAt": "2024-03-20T11:02:25.373142"
+    },
+    {
+      "id": 10,
+      "menuId": 1,
+      "createdBy": "Phill",
+      "comment": "Comment",
+      "rate": 1,
+      "createdAt": "2024-03-20T11:02:29.873426"
+    }
+  ],
+  "menuRating": {
+    "menuId": 1,
+    "wilsonScore": 0.17042015,
+    "avgStars": 3.0
+  }
+}

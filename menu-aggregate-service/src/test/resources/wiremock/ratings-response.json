@@ -1,0 +1,19 @@
+{
+  "menuRatings": [
+    {
+      "menuId": 1,
+      "wilsonScore": 0.17042015,
+      "avgStars": 3.0
+    },
+    {
+      "menuId": 2,
+      "wilsonScore": 0.2065433,
+      "avgStars": 5.0
+    },
+    {
+      "menuId": 3,
+      "wilsonScore": 0.2065433,
+      "avgStars": 5.0
+    }
+  ]
+}

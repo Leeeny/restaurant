@@ -22,6 +22,7 @@ ext {
     springDocVersion = "3.0.3"
     wiremockVersion = "3.13.2"
     springCloudVersion = "2025.1.2"
+    lombokVersion = "1.18.42"
 }
 
 dependencyManagement {
@@ -38,9 +39,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
     implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springDocVersion}"
 
-    compileOnly 'org.projectlombok:lombok:1.18.42'
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'

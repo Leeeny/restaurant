@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "name": "One",
+  "description": "Nice Item One",
+  "price": 10.1,
+  "category": "DRINKS",
+  "timeToCook": 1000,
+  "weight": 10.2,
+  "imageUrl": "http://images.com/one.png",
+  "updatedAt": "2024-03-20T11:01:30.043025",
+  "createdAt": "2024-03-20T11:01:30.042833",
+  "ingredientCollection": {
+    "ingredients": [
+      {
+        "name": "ingredient one",
+        "calories": 10
+      },
+      {
+        "name": "ingredient two",
+        "calories": 20
+      }
+    ]
+  }
+}

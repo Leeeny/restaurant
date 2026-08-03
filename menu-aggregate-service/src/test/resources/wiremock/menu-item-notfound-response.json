@@ -1,0 +1,8 @@
+{
+  "type": "about:blank",
+  "title": "Not Found",
+  "status": 404,
+  "detail": "MenuItem with id=1000 not found.",
+  "instance": "/v1/menu-item/1000",
+  "timestamp": "2024-03-24T18:58:22.035801969Z"
+}

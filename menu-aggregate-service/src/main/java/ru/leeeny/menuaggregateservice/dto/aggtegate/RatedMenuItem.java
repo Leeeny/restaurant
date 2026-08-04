@@ -3,8 +3,6 @@ package ru.leeeny.menuaggregateservice.dto.aggtegate;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
-import ru.leeeny.menuaggregateservice.dto.menu.IngredientCollection;
 import ru.leeeny.menuaggregateservice.dto.menu.MenuItem;
 
 import java.math.BigDecimal;
@@ -22,17 +20,19 @@ public class RatedMenuItem extends MenuItem {
 	public RatedMenuItem(Long id,
 	                     String name,
 	                     String description,
+	                     Boolean active,
 	                     BigDecimal price,
-	                     Category category,
-	                     long timeToCook,
-	                     double weight,
+	                     Long categoryId,
+	                     Integer cookTimeMinutes,
+	                     BigDecimal weightGrams,
 	                     String imageUrl,
 	                     LocalDateTime updatedAt,
 	                     LocalDateTime createdAt,
-	                     IngredientCollection ingredientCollection,
 	                     Float wilsonScore,
 	                     Float avgStars) {
-		super(id, name, description, price, category, timeToCook, weight, imageUrl, updatedAt, createdAt, ingredientCollection);
+
+		super(id, name, description, active, price, categoryId, cookTimeMinutes, weightGrams, imageUrl, updatedAt, createdAt);
+
 		this.wilsonScore = wilsonScore;
 		this.avgStars = avgStars;
 	}

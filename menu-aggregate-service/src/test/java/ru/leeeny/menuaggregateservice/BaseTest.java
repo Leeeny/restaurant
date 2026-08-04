@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.util.ResourceUtils;
-import ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort;
 import ru.leeeny.menuaggregateservice.props.ExternalServiceProps;
 
 import java.nio.charset.StandardCharsets;
@@ -27,7 +26,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.serverError;
 import static com.github.tomakehurst.wiremock.client.WireMock.serviceUnavailable;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static ru.leeeny.menuaggregateservice.dto.menu.Category.DRINKS;
 import static ru.leeeny.menuaggregateservice.testutil.TestConstants.MENU_ONE_ID;
 
 @SpringBootTest
@@ -156,7 +154,7 @@ public class BaseTest {
 	}
 
 	protected String getMenuListUrl() {
-		return props.getMenuItemPath() + "?category=" + DRINKS + "&sort=" + RatedMenuSort.DATE_DESC;
+		return props.getMenuItemPath() + "?category=" + 1 /*+ "&sort=" + RatedMenuSort.DATE_DESC*/;
 	}
 
 	protected String getReviewsOfMenuOneUrl() {

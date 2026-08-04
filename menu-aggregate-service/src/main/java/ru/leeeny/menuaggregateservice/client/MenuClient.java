@@ -2,7 +2,6 @@ package ru.leeeny.menuaggregateservice.client;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -11,17 +10,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort;
 import ru.leeeny.menuaggregateservice.dto.exception.MenuAggregateException;
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
 import ru.leeeny.menuaggregateservice.dto.menu.MenuItem;
+import ru.leeeny.menuaggregateservice.dto.menu.MenuItemPageResponse;
 import ru.leeeny.menuaggregateservice.props.ExternalServiceProps;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Optional;
 
 import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.AZ;
-import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.DATE_ASC;
-import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.DATE_DESC;
 import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.PRICE_ASC;
 import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.PRICE_DESC;
 import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.ZA;
@@ -30,7 +26,8 @@ import static ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort.ZA;
 public class MenuClient extends BaseClient {
 
 	public static final EnumSet<RatedMenuSort> SUPPORTED_SORTS =
-			EnumSet.of(AZ, ZA, DATE_ASC, DATE_DESC, PRICE_ASC, PRICE_DESC);
+			//	EnumSet.of(AZ, ZA, DATE_ASC, DATE_DESC, PRICE_ASC, PRICE_DESC);
+			EnumSet.of(AZ, ZA, PRICE_ASC, PRICE_DESC);
 
 	public static final String MENU_BACKEND = "menuBackend";
 
@@ -63,21 +60,23 @@ public class MenuClient extends BaseClient {
 
 	@CircuitBreaker(name = MENU_BACKEND)
 	@Retry(name = MENU_BACKEND)
-	public Mono<List<MenuItem>> getMenusForCategory(Category category, RatedMenuSort sort) {
+	public Mono<List<MenuItem>> getMenusForCategory(Long categoryId, RatedMenuSort sort) {
 		var mono = webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path(props.getMenuItemPath())
-						.queryParam("category", category)
-						.queryParamIfPresent("sort", Optional.of(sort).filter(this::supported))
+						.queryParam("category", categoryId)
+						//	.queryParamIfPresent("sort", Optional.of(sort).filter(this::supported))
 						.build()
 				)
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.onStatus(HttpStatusCode::is5xxServerError, response ->
 						Mono.error(new MenuAggregateException("Menus", HttpStatus.SERVICE_UNAVAILABLE)))
-				.bodyToMono(new ParameterizedTypeReference<List<MenuItem>>() {
+				.bodyToMono(MenuItemPageResponse.class)
+				.map(MenuItemPageResponse::getContent);
+		/*		.bodyToMono(new ParameterizedTypeReference<List<MenuItem>>() {
 					// нужно чтобы не было стирания типов для jackson, здесь видно только List<???>
-				});
+				});*/
 
 		return applyTimeoutAndHandleExceptions(mono);
 	}

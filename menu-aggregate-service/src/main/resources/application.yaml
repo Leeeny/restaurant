@@ -13,8 +13,8 @@ spring:
       - classpath:openapi-descriptions.yml
 
 external:
-  menu-service-url: "http://localhost:8091"
-  review-service-url: "http://localhost:8093"
+  menu-service-url: "${MENU_SERVICE_URL:http://localhost:8091}"
+  review-service-url: "${REVIEW_SERVICE_URL:http://localhost:8093}"
   menu-item-path: "/v1/menu-items"
   menu-reviews-path: "/v1/reviews/menu-item"
   menu-ratings-path: "/v1/reviews/ratings"

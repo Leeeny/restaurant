@@ -14,7 +14,7 @@ public class TestConstants {
 	public static final Duration RETRY_BACKOFF = Duration.ofMillis(10);
 
 	public static final String BASE_URL = "/v1/menu-orders";
-	public static final String MENU_INFO_PATH = "/v1/menu-items/menu-info";
+	public static final String MENU_INFO_PATH = "/v1/menu-items";
 
 	public static final String CITY_ONE = "CityOne";
 	public static final String STREET_ONE = "StreetOne";

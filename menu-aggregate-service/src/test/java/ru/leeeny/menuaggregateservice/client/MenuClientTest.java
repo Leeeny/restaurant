@@ -8,11 +8,11 @@ import reactor.test.StepVerifier;
 import ru.leeeny.menuaggregateservice.BaseTest;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort;
 import ru.leeeny.menuaggregateservice.dto.exception.MenuAggregateException;
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.leeeny.menuaggregateservice.client.MenuClient.MENU_BACKEND;
 import static ru.leeeny.menuaggregateservice.testutil.TestConstants.MENU_ONE_ID;
 import static ru.leeeny.menuaggregateservice.testutil.TestDateProvider.drinksMenuList;
@@ -27,7 +27,7 @@ class MenuClientTest extends BaseTest {
 	void getMenusForCategory_returnsCorrectResponse() {
 		stubForCorrectMenuListResponse();
 
-		var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+		var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 		StepVerifier.create(mono)
 				.expectNextMatches(response ->
 						response.equals(drinksMenuList()))
@@ -39,10 +39,13 @@ class MenuClientTest extends BaseTest {
 	void getMenusForCategory_returnsCorrectResponseAfterRetriesSucceed() {
 		stubForMenuItemListWithRetriesAndSuccess();
 
-		var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+		var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 		StepVerifier.create(mono)
-				.expectNextMatches(response ->
-						response.equals(drinksMenuList()))
+				.assertNext(response -> {
+					for (int i = 0; i < response.size(); i++) {
+						assertEquals(drinksMenuList().get(i), response.get(i));
+					}
+				})
 				.verifyComplete();
 		wiremock.verify(3, getRequestedFor(urlEqualTo(getMenuListUrl())));
 	}
@@ -51,7 +54,7 @@ class MenuClientTest extends BaseTest {
 	void getMenusForCategory_returnsErrorOn500Error() {
 		stubForMenuItemList500Error();
 
-		var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+		var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 		StepVerifier.create(mono)
 				.expectError(MenuAggregateException.class)
 				.verify();
@@ -62,7 +65,7 @@ class MenuClientTest extends BaseTest {
 	void getMenusForCategory_returnsErrorOnTimeout() {
 		stubForMenuItemListTimeout();
 
-		var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+		var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 		StepVerifier.create(mono)
 				.expectError(MenuAggregateException.class)
 				.verify();
@@ -73,7 +76,7 @@ class MenuClientTest extends BaseTest {
 	void getMenusForCategory_returnsErrorAfterRetriesFailWithDifferentReasons() {
 		stubForMenuItemListWithRetriesAndFailure();
 
-		var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+		var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 		StepVerifier.create(mono)
 				.expectError(MenuAggregateException.class)
 				.verify();
@@ -87,7 +90,7 @@ class MenuClientTest extends BaseTest {
 		stubForMenuItemList500Error();
 		CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(MENU_BACKEND);
 		for (int i = 1; i <= 4; i++) {
-			var mono = client.getMenusForCategory(Category.DRINKS, RatedMenuSort.DATE_DESC);
+			var mono = client.getMenusForCategory(1L, RatedMenuSort.DATE_DESC);
 			Class<? extends Throwable> expectError;
 			if (i < 3) {
 				expectError = MenuAggregateException.class;

@@ -22,7 +22,6 @@ import reactor.core.publisher.Mono;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.MenuAggregate;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.MenuAggregateList;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort;
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
 import ru.leeeny.menuaggregateservice.dto.review.ReviewSort;
 import ru.leeeny.menuaggregateservice.service.AggregateService;
 
@@ -97,12 +96,12 @@ public class MenuAggregateController {
 	})
 	@GetMapping
 	public Mono<MenuAggregateList> getMenusWithRatings(@RequestParam("category")
-	                                                   @NotBlank(message = "Категория не может быть пустой.")
-	                                                   String category,
+	                                                       @Positive(message = "Идентификатор категории не может быть <= 0.")
+	                                                       Long categoryId,
 	                                                   @RequestParam(value = "sortBy", defaultValue = "rate_desc")
 	                                                   @NotBlank(message = "Параметр сортировки не может быть пустым.")
 	                                                   String sortBy) {
-		log.info("Received request to GET info about menu items for category: {}", category);
-		return aggregateService.getMenusWithRatings(Category.fromString(category), RatedMenuSort.fromString(sortBy));
+		log.info("Received request to GET info about menu items for categoryId: {}", categoryId);
+		return aggregateService.getMenusWithRatings(categoryId, RatedMenuSort.fromString(sortBy));
 	}
 }

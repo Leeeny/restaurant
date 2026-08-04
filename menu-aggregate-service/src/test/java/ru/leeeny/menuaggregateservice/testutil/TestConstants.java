@@ -1,7 +1,5 @@
 package ru.leeeny.menuaggregateservice.testutil;
 
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,8 +10,8 @@ public class TestConstants {
 	public static final String MENU_ONE_NAME = "One";
 	public static final String MENU_ONE_DESCRIPTION = "Nice Item One";
 	public static final BigDecimal MENU_ONE_PRICE = BigDecimal.valueOf(10.1);
-	public static final Category MENU_ONE_CATEGORY = Category.DRINKS;
-	public static final long MENU_ONE_TIME_TO_COOK = 1000;
+	public static final Long MENU_ONE_CATEGORY = 1L;
+	public static final Integer MENU_ONE_TIME_TO_COOK = 1000;
 	public static final double MENU_ONE_WEIGHT = 10.2;
 	public static final String MENU_ONE_IMAGE_URL = "http://images.com/one.png";
 	public static final LocalDateTime MENU_ONE_UPDATED_AT = LocalDateTime.parse("2024-03-20T11:01:30.043025");
@@ -23,8 +21,8 @@ public class TestConstants {
 	public static final String MENU_TWO_NAME = "Two";
 	public static final String MENU_TWO_DESCRIPTION = "Nice Item Two";
 	public static final BigDecimal MENU_TWO_PRICE = BigDecimal.valueOf(10.1);
-	public static final Category MENU_TWO_CATEGORY = Category.DRINKS;
-	public static final long MENU_TWO_TIME_TO_COOK = 1000;
+	public static final Long MENU_TWO_CATEGORY = 1L;
+	public static final Integer MENU_TWO_TIME_TO_COOK = 1000;
 	public static final double MENU_TWO_WEIGHT = 20.2;
 	public static final String MENU_TWO_IMAGE_URL = "http://images.com/two.png";
 	public static final LocalDateTime MENU_TWO_UPDATED_AT = LocalDateTime.parse("2024-03-20T11:01:34.574555");
@@ -34,8 +32,8 @@ public class TestConstants {
 	public static final String MENU_THREE_NAME = "Three";
 	public static final String MENU_THREE_DESCRIPTION = "Nice Item Three";
 	public static final BigDecimal MENU_THREE_PRICE = BigDecimal.valueOf(10.1);
-	public static final Category MENU_THREE_CATEGORY = Category.DRINKS;
-	public static final long MENU_THREE_TIME_TO_COOK = 1000;
+	public static final Long MENU_THREE_CATEGORY = 1L;
+	public static final Integer MENU_THREE_TIME_TO_COOK = 1000;
 	public static final double MENU_THREE_WEIGHT = 30.2;
 	public static final String MENU_THREE_IMAGE_URL = "http://images.com/three.png";
 	public static final LocalDateTime MENU_THREE_UPDATED_AT = LocalDateTime.parse("2024-03-20T11:01:37.942606");

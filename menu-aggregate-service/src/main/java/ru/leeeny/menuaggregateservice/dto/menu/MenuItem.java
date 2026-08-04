@@ -18,20 +18,20 @@ public class MenuItem {
 
 	private String description;
 
+	private Boolean active;
+
 	private BigDecimal price;
 
-	private Category category;
+	private Long categoryId;
 
-	private long timeToCook;
+	private Integer cookTimeMinutes;
 
-	private double weight;
+	private BigDecimal weightGrams;
 
 	private String imageUrl;
 
 	private LocalDateTime updatedAt;
 
 	private LocalDateTime createdAt;
-
-	private IngredientCollection ingredientCollection;
 
 }

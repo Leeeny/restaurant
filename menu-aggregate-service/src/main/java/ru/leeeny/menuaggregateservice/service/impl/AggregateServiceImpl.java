@@ -10,7 +10,6 @@ import ru.leeeny.menuaggregateservice.client.ReviewsClient;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.MenuAggregate;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.MenuAggregateList;
 import ru.leeeny.menuaggregateservice.dto.aggtegate.RatedMenuSort;
-import ru.leeeny.menuaggregateservice.dto.menu.Category;
 import ru.leeeny.menuaggregateservice.dto.menu.MenuItem;
 import ru.leeeny.menuaggregateservice.dto.review.GetRatingsRequest;
 import ru.leeeny.menuaggregateservice.dto.review.MenuRatingInfo;
@@ -44,8 +43,8 @@ public class AggregateServiceImpl implements AggregateService {
 	}
 
 	@Override
-	public Mono<MenuAggregateList> getMenusWithRatings(Category category, RatedMenuSort sort) {
-		return menuClient.getMenusForCategory(category, sort)
+	public Mono<MenuAggregateList> getMenusWithRatings(Long categoryId, RatedMenuSort sort) {
+		return menuClient.getMenusForCategory(categoryId, sort)
 				.flatMap(items ->
 						getRatingsForMenuItems(items).map(raitingMap ->
 								mapper.createMenuAggregateList(raitingMap, items, sort))

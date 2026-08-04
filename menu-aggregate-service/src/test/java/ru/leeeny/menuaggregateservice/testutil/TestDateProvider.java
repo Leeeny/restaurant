@@ -12,6 +12,7 @@ import ru.leeeny.menuaggregateservice.dto.review.RatedReviewsList;
 import ru.leeeny.menuaggregateservice.dto.review.RatingsList;
 import ru.leeeny.menuaggregateservice.dto.review.Review;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -186,14 +187,14 @@ public class TestDateProvider {
 		item.setId(MENU_ONE_ID);
 		item.setName(MENU_ONE_NAME);
 		item.setDescription(MENU_ONE_DESCRIPTION);
+		item.setActive(true);
 		item.setPrice(MENU_ONE_PRICE);
-		item.setCategory(MENU_ONE_CATEGORY);
-		item.setTimeToCook(MENU_ONE_TIME_TO_COOK);
-		item.setWeight(MENU_ONE_WEIGHT);
+		item.setCategoryId(MENU_ONE_CATEGORY);
+		item.setCookTimeMinutes(MENU_ONE_TIME_TO_COOK);
+		item.setWeightGrams(BigDecimal.valueOf(MENU_ONE_WEIGHT));
 		item.setImageUrl(MENU_ONE_IMAGE_URL);
 		item.setUpdatedAt(MENU_ONE_UPDATED_AT);
 		item.setCreatedAt(MENU_ONE_CREATED_AT);
-		item.setIngredientCollection(ingredientCollection());
 		return item;
 	}
 
@@ -202,14 +203,14 @@ public class TestDateProvider {
 		item.setId(MENU_TWO_ID);
 		item.setName(MENU_TWO_NAME);
 		item.setDescription(MENU_TWO_DESCRIPTION);
+		item.setActive(true);
 		item.setPrice(MENU_TWO_PRICE);
-		item.setCategory(MENU_TWO_CATEGORY);
-		item.setTimeToCook(MENU_TWO_TIME_TO_COOK);
-		item.setWeight(MENU_TWO_WEIGHT);
+		item.setCategoryId(MENU_TWO_CATEGORY);
+		item.setCookTimeMinutes(MENU_TWO_TIME_TO_COOK);
+		item.setWeightGrams(BigDecimal.valueOf(MENU_TWO_WEIGHT));
 		item.setImageUrl(MENU_TWO_IMAGE_URL);
 		item.setUpdatedAt(MENU_TWO_UPDATED_AT);
 		item.setCreatedAt(MENU_TWO_CREATED_AT);
-		item.setIngredientCollection(ingredientCollection());
 		return item;
 	}
 
@@ -218,14 +219,14 @@ public class TestDateProvider {
 		item.setId(MENU_THREE_ID);
 		item.setName(MENU_THREE_NAME);
 		item.setDescription(MENU_THREE_DESCRIPTION);
+		item.setActive(true);
 		item.setPrice(MENU_THREE_PRICE);
-		item.setCategory(MENU_THREE_CATEGORY);
-		item.setTimeToCook(MENU_THREE_TIME_TO_COOK);
-		item.setWeight(MENU_THREE_WEIGHT);
+		item.setCategoryId(MENU_THREE_CATEGORY);
+		item.setCookTimeMinutes(MENU_THREE_TIME_TO_COOK);
+		item.setWeightGrams(BigDecimal.valueOf(MENU_THREE_WEIGHT));
 		item.setImageUrl(MENU_THREE_IMAGE_URL);
 		item.setUpdatedAt(MENU_THREE_UPDATED_AT);
 		item.setCreatedAt(MENU_THREE_CREATED_AT);
-		item.setIngredientCollection(ingredientCollection());
 		return item;
 	}
 
@@ -234,14 +235,14 @@ public class TestDateProvider {
 				.id(MENU_ONE_ID)
 				.name(MENU_ONE_NAME)
 				.description(MENU_ONE_DESCRIPTION)
+				.active(true)
 				.price(MENU_ONE_PRICE)
-				.category(MENU_ONE_CATEGORY)
-				.timeToCook(MENU_ONE_TIME_TO_COOK)
-				.weight(MENU_ONE_WEIGHT)
+				.categoryId(MENU_ONE_CATEGORY)
+				.cookTimeMinutes(MENU_ONE_TIME_TO_COOK)
+				.weightGrams(BigDecimal.valueOf(MENU_ONE_WEIGHT))
 				.imageUrl(MENU_ONE_IMAGE_URL)
 				.updatedAt(MENU_ONE_UPDATED_AT)
 				.createdAt(MENU_ONE_CREATED_AT)
-				.ingredientCollection(ingredientCollection())
 				.wilsonScore(MENU_ONE_WILSON_SCORE)
 				.avgStars(MENU_ONE_AVG_STARS)
 				.build();
@@ -252,14 +253,12 @@ public class TestDateProvider {
 				.id(MENU_TWO_ID)
 				.name(MENU_TWO_NAME)
 				.description(MENU_TWO_DESCRIPTION)
+				.active(true)
 				.price(MENU_TWO_PRICE)
-				.category(MENU_TWO_CATEGORY)
-				.timeToCook(MENU_TWO_TIME_TO_COOK)
-				.weight(MENU_TWO_WEIGHT)
+				.categoryId(MENU_TWO_CATEGORY)
+				.cookTimeMinutes(MENU_TWO_TIME_TO_COOK)
+				.weightGrams(BigDecimal.valueOf(MENU_TWO_WEIGHT))
 				.imageUrl(MENU_TWO_IMAGE_URL)
-				.updatedAt(MENU_TWO_UPDATED_AT)
-				.createdAt(MENU_TWO_CREATED_AT)
-				.ingredientCollection(ingredientCollection())
 				.wilsonScore(MENU_TWO_WILSON_SCORE)
 				.avgStars(MENU_TWO_AVG_STARS)
 				.build();
@@ -270,14 +269,12 @@ public class TestDateProvider {
 				.id(MENU_THREE_ID)
 				.name(MENU_THREE_NAME)
 				.description(MENU_THREE_DESCRIPTION)
+				.active(true)
 				.price(MENU_THREE_PRICE)
-				.category(MENU_THREE_CATEGORY)
-				.timeToCook(MENU_THREE_TIME_TO_COOK)
-				.weight(MENU_THREE_WEIGHT)
+				.categoryId(MENU_THREE_CATEGORY)
+				.cookTimeMinutes(MENU_THREE_TIME_TO_COOK)
+				.weightGrams(BigDecimal.valueOf(MENU_THREE_WEIGHT))
 				.imageUrl(MENU_THREE_IMAGE_URL)
-				.updatedAt(MENU_THREE_UPDATED_AT)
-				.createdAt(MENU_THREE_CREATED_AT)
-				.ingredientCollection(ingredientCollection())
 				.wilsonScore(MENU_THREE_WILSON_SCORE)
 				.avgStars(MENU_THREE_AVG_STARS)
 				.build();

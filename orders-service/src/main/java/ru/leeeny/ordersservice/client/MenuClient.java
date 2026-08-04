@@ -29,7 +29,7 @@ public class MenuClient {
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(request)
 				.retrieve()
-				.onStatus(HttpStatusCode::is5xxServerError, response ->
+				.onStatus(HttpStatusCode::is5xxServerError, _ ->
 						Mono.error(new OrderServiceException("Menu service Unavailable", HttpStatus.SERVICE_UNAVAILABLE)))
 				.bodyToMono(GetMenuInfoResponse.class)
 				.timeout(props.getDefaultTimeout())

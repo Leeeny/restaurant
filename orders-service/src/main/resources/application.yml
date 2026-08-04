@@ -33,8 +33,8 @@ spring:
     locations: classpath:db/migration
 
 external:
-  menu-service-url: "http://localhost:8091"
-  menu-info-path: "v1/menu-items/menu-info"
+  menu-service-url: "${MENU_SERVICE_URL:http://localhost:8091}"
+  menu-info-path: "/v1/menu-info"
   default-timeout: 2s
   retry-backoff: 100ms
   retry-count: 5

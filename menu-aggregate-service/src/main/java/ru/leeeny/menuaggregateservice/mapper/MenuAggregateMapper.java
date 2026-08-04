@@ -24,30 +24,34 @@ public class MenuAggregateMapper {
 	public MenuAggregateList createMenuAggregateList(Map<Long, MenuRatingInfo> ratings,
 	                                                 List<MenuItem> items,
 	                                                 RatedMenuSort sort) {
+
 		var itemsStream = items.stream().map(menuItem -> {
 			MenuRatingInfo ratingInfo = ratings.get(menuItem.getId());
+
 			return RatedMenuItem.builder()
 					.id(menuItem.getId())
 					.name(menuItem.getName())
 					.description(menuItem.getDescription())
+					.active(menuItem.getActive())
 					.price(menuItem.getPrice())
-					.category(menuItem.getCategory())
-					.timeToCook(menuItem.getTimeToCook())
-					.weight(menuItem.getWeight())
+					.categoryId(menuItem.getCategoryId())
+					.cookTimeMinutes(menuItem.getCookTimeMinutes())
+					.weightGrams(menuItem.getWeightGrams())
 					.imageUrl(menuItem.getImageUrl())
 					.createdAt(menuItem.getCreatedAt())
 					.updatedAt(menuItem.getUpdatedAt())
-					.ingredientCollection(menuItem.getIngredientCollection())
 					.wilsonScore(ratingInfo.getWilsonScore())
 					.avgStars(ratingInfo.getAvgStars())
 					.build();
 		});
+
 		if (shouldApplyInMemorySort(sort)) {
 			itemsStream = itemsStream.sorted(sort.getComparator());
 		}
-		var result = itemsStream.toList();
 
-		return MenuAggregateList.builder().menuItems(result).build();
+		return MenuAggregateList.builder()
+				.menuItems(itemsStream.toList())
+				.build();
 	}
 
 	public MenuAggregate createMenuAggregate(MenuItem menuItem, RatedReviewsList ratedReviewsList) {

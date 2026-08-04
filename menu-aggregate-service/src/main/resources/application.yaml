@@ -7,6 +7,10 @@ spring:
     name: menu-aggregate-service
   lifecycle:
     timeout-per-shutdown-phase: 30s
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - classpath:openapi-descriptions.yml
 
 external:
   menu-service-url: "http://localhost:8091"

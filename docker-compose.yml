@@ -7,6 +7,7 @@ services:
         condition: service_healthy
     ports:
       - "8091:8091"
+    networks: [ backend, menu-db ]
     environment:
       POSTGRES_HOST: menu-postgres
       POSTGRES_PORT: 5432
@@ -21,6 +22,7 @@ services:
   menu-postgres:
     image: postgres:17
     container_name: menu-postgres
+    networks: [ menu-db ]
     environment:
       POSTGRES_USER: menu-user
       POSTGRES_PASSWORD: menu1234
@@ -41,6 +43,7 @@ services:
     depends_on:
       order-postgres:
         condition: service_healthy
+    networks: [ backend, order-db ]
     ports:
       - "8092:8092"
     environment:
@@ -48,6 +51,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: order-user
       POSTGRES_PASSWORD: order1234
+      MENU_SERVICE_URL: http://menu-service:8091
     healthcheck:
       test: [ "CMD", "/workspace/health-check" ]
       interval: 5s
@@ -57,6 +61,7 @@ services:
   order-postgres:
     image: postgres:17
     container_name: order-postgres
+    networks: [ order-db ]
     environment:
       POSTGRES_USER: order-user
       POSTGRES_PASSWORD: order1234
@@ -77,6 +82,7 @@ services:
     depends_on:
       review-postgres:
         condition: service_healthy
+    networks: [ backend, review-db ]
     ports:
       - "8093:8093"
     environment:
@@ -97,6 +103,7 @@ services:
       POSTGRES_USER: review-user
       POSTGRES_PASSWORD: review1234
       POSTGRES_DB: review
+    networks: [ review-db ]
     volumes:
       - ./infrastructure/databases/review:/docker-entrypoint-initdb.d:ro
     ports:
@@ -106,3 +113,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
+
+  menu-aggregate-service:
+    image: menu-aggregate-service # в сервисе запустить gradle bootBuildImage
+    container_name: "menu-aggregate-service"
+    ports:
+      - "8094:8094"
+    networks: [ backend ]
+    environment:
+      MENU_SERVICE_URL: http://menu-service:8091
+      REVIEW_SERVICE_URL: http://reviews-service:8093
+    healthcheck:
+      test: [ "CMD", "/workspace/health-check" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+networks:
+  backend:
+  menu-db:
+  order-db:
+  review-db:

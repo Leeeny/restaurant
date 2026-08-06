@@ -28,10 +28,12 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(libs.spring.cloud.dependencies))
     implementation(libs.spring.boot.actuator)
     implementation(libs.spring.boot.data.jpa)
     implementation(libs.spring.boot.validation)
     implementation(libs.spring.boot.web)
+    implementation(libs.spring.cloud.starter.config)
 
     implementation(libs.postgresql)
     implementation(libs.spring.boot.starter.flyway)

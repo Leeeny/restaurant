@@ -22,6 +22,13 @@ val mapstructVersion = "1.6.3"
 val springdocOpenapi = "2.8.13"
 val lombokMapstructBinding = "0.2.0"
 val flywayVersion = "13.0.0"
+val springCloudDependenciesVersion = "2025.1.2"
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudDependenciesVersion}")
+    }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -33,6 +40,7 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql:${flywayVersion}")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapi")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
 
     compileOnly("org.projectlombok:lombok")
 

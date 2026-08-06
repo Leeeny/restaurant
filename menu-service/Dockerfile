@@ -1,5 +1,3 @@
-# Сейчас вместо него используется Cloud Native Buildpacks
-
 FROM gradle:9.6.0-jdk25 AS build
 
 WORKDIR /home/gradle/project

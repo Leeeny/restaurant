@@ -1,65 +1,11 @@
-server:
-  port: 8094
-  shutdown: graceful
-
 spring:
   application:
     name: menu-aggregate-service
-  lifecycle:
-    timeout-per-shutdown-phase: 30s
   config:
     import:
       - optional:file:.env[.properties]
-      - classpath:openapi-descriptions.yml
+      - configserver:http://${CONFIG_SERVER_URL:localhost}:8090
 
-external:
-  menu-service-url: "${MENU_SERVICE_URL:http://localhost:8091}"
-  review-service-url: "${REVIEW_SERVICE_URL:http://localhost:8093}"
-  menu-item-path: "/v1/menu-items"
-  menu-reviews-path: "/v1/reviews/menu-item"
-  menu-ratings-path: "/v1/reviews/ratings"
-  default-timeout: 2s
-  retry-backoff: 100ms
-  retry-count: 5
-  retry-jitter: 0.75
-
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        sliding-window-type: time_based
-        sliding-window-size: 30 # seconds
-        permitted-number-of-calls-in-half-open-state: 5
-        failure-rate-threshold: 60 # percents
-        wait-duration-in-open-state:
-          seconds: 10
-        slow-call-duration-threshold:
-          seconds: 4s
-        # количество вызовов, по которым принимается решение открыть / закрыть circuitBreaker
-        # т.к. используется тип окна time-based, это количетсово вызовов должно произойти за
-        # указанное в параметре sliding-window-size время
-        minimum-number-of-calls: 15
-    instances:
-      menuBackend:
-        base-config: default
-      reviewBackend:
-        base-config: default
-  retry:
-    configs:
-      default:
-        max-attempts: ${external.retry-count}
-        wait-duration: # ожидание между попытками
-          seconds: ${external.retry-backoff}
-        enable-exponential-backoff: true
-        exponential-backoff-multiplier: 2
-        enable-randomized-wait: true
-        randomized-wait-factor: ${external.retry-jitter}
-        retry-exceptions: # исключения, при возникновении которых будут выполнены повторные попытки
-          - ru.leeeny.menuaggregateservice.dto.exception.MenuAggregateException
-        ignore-exceptions:
-          - io.github.resilience4j.circuitbreaker.CallNotPermittedException
-    instances:
-      menuBackend:
-        base-config: default
-      reviewBackend:
-        base-config: default
+  cloud:
+    config:
+      label: master

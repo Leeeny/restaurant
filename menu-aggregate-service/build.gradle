@@ -38,6 +38,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
     implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springDocVersion}"
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

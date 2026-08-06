@@ -24,6 +24,13 @@ val postgresqlVersion by extra("42.7.13")
 val r2dbcPostgresqlVersion by extra("1.1.2.RELEASE")
 val okhttp3Version by extra("5.4.0")
 val wiremockStandaloneVersion by extra("3.13.2")
+val springCloudDependenciesVersion by extra("2025.1.2")
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudDependenciesVersion}")
+    }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -42,6 +49,7 @@ dependencies {
 
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.postgresql:r2dbc-postgresql:$r2dbcPostgresqlVersion")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")

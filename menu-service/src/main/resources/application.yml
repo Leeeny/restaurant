@@ -1,53 +1,11 @@
-server:
-  port: 8091
-  shutdown: graceful
-  tomcat:
-    connection-timeout: 3s
-    keep-alive-timeout: 20s
-    threads:
-      max: 200
-      min-spare: 10
-
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import:
+      - optional:file:.env[.properties]
+      - configserver:http://${CONFIG_SERVER_URL:localhost}:8090
   application:
     name: menu-service
-  lifecycle:
-    timeout-per-shutdown-phase: 30s
-  datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5434}/menu
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      connection-timeout: 2000
-      # Специалисты  HikariCP рекомендуют устанавливать количество соединений,
-      # исходя из формулы:
-      # connections = ((core_count * 2) + effective_spindle_count)
-      # где core_count - количество ядер процессора
-      # effective_spindle_count - количество вращающихся дисков
-      # Так как мы предполагаем, что будет использоваться SSD, вращающихся дисков не будет,
-      # поэтому effective_spindle_count = 0
-      maximum-pool-size: 12
-  flyway:
-    enabled: true
-    validate-on-migrate: true
-    baseline-on-migrate: true
-    locations: classpath:db/migration
 
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    properties:
-      org.hibernate:
-        hibernate:
-          default_schema: menu
-          show_sql: ${SHOW_SQL:true}
-          format_sql: ${FORMAT_SQL:true}
-          highlight_sql: ${HIGHLIGHT_SQL:true}
-          session.events.log.LOG_QUERIES_SLOWER_THAN_MS: ${SLOW_SQL_QUERY_INDICATOR_MS:1500}
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-logging:
-  config: "classpath:logback.xml"
+  cloud:
+    config:
+      label: master

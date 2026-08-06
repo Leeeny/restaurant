@@ -1,9 +1,13 @@
 services:
   menu-service:
-    image: menu-service # в сервисе запустить gradle bootBuildImage
+    #image: menu-service # в сервисе запустить gradle bootBuildImage
+    build:
+      context: ./menu-service
     container_name: "menu-service"
     depends_on:
       menu-postgres:
+        condition: service_healthy
+      cloud-config:
         condition: service_healthy
     ports:
       - "8091:8091"
@@ -13,8 +17,9 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: menu-user
       POSTGRES_PASSWORD: menu1234
+      CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
     healthcheck:
-      test: [ "CMD", "/workspace/health-check" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8091/actuator/health" ]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -38,10 +43,14 @@ services:
       retries: 20
 
   order-service:
-    image: orders-service # в сервисе запустить gradle bootBuildImage
+    # image: orders-service # в сервисе запустить gradle bootBuildImage
+    build:
+      context: ./orders-service
     container_name: "orders-service"
     depends_on:
       order-postgres:
+        condition: service_healthy
+      cloud-config:
         condition: service_healthy
     networks: [ backend, order-db ]
     ports:
@@ -52,8 +61,9 @@ services:
       POSTGRES_USER: order-user
       POSTGRES_PASSWORD: order1234
       MENU_SERVICE_URL: http://menu-service:8091
+      CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
     healthcheck:
-      test: [ "CMD", "/workspace/health-check" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8092/actuator/health" ]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -77,10 +87,14 @@ services:
       retries: 20
 
   reviews-service:
-    image: reviews-service # в сервисе запустить gradle bootBuildImage
+    #image: reviews-service # в сервисе запустить gradle bootBuildImage
+    build:
+      context: ./reviews-service
     container_name: "reviews-service"
     depends_on:
       review-postgres:
+        condition: service_healthy
+      cloud-config:
         condition: service_healthy
     networks: [ backend, review-db ]
     ports:
@@ -90,8 +104,9 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: review-user
       POSTGRES_PASSWORD: review1234
+      CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
     healthcheck:
-      test: [ "CMD", "/workspace/health-check" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8093/actuator/health" ]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -115,16 +130,38 @@ services:
       retries: 20
 
   menu-aggregate-service:
-    image: menu-aggregate-service # в сервисе запустить gradle bootBuildImage
+    #image: menu-aggregate-service # в сервисе запустить gradle bootBuildImage
+    build:
+      context: ./menu-aggregate-service
     container_name: "menu-aggregate-service"
+    depends_on:
+      cloud-config:
+        condition: service_healthy
     ports:
       - "8094:8094"
     networks: [ backend ]
     environment:
       MENU_SERVICE_URL: http://menu-service:8091
       REVIEW_SERVICE_URL: http://reviews-service:8093
+      CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
     healthcheck:
-      test: [ "CMD", "/workspace/health-check" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8094/actuator/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  cloud-config:
+    #image: cloud-config # в сервисе запустить gradle bootBuildImage
+    build:
+      context: ./cloud-config
+    container_name: "cloud-config"
+    ports:
+      - "8090:8090"
+    networks: [ backend ]
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
       interval: 5s
       timeout: 5s
       retries: 30

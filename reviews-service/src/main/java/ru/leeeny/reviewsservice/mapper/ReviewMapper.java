@@ -1,4 +1,4 @@
-package ru.leeeny.reviewsservice;
+package ru.leeeny.reviewsservice.mapper;
 
 
 import org.mapstruct.Mapper;

@@ -2,6 +2,7 @@
 
 spring-boot = "4.1.0"
 spring-dependency-management = "1.1.7"
+spring-cloud = "2025.1.2"
 ben-manes = "0.54.0"
 openapi = "7.13.0"
 
@@ -30,6 +31,9 @@ spring-boot-webflux = { module = "org.springframework.boot:spring-boot-starter-w
 spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
 spring-boot-data-jpa-test = { module = "org.springframework.boot:spring-boot-data-jpa-test" }
 spring-boot-webtestclient = { module = "org.springframework.boot:spring-boot-webtestclient" }
+spring-cloud-starter-config = { module = "org.springframework.cloud:spring-cloud-starter-config" }
+
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
 
 # Libraries
 flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }

@@ -1,0 +1,12 @@
+### POST Request to register debezium connector
+POST http://localhost:8083/connectors
+Content-Type: application/json
+
+< orders-outbox-connector.json
+
+
+### DELETE debezium connector
+DELETE http://localhost:8083/connectors/orders-outbox-connector
+
+### DELETE subject
+DELETE http://localhost:8081/subjects/v1.orders.orders_outbox-value

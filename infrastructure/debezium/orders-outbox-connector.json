@@ -1,0 +1,36 @@
+{
+  "name": "orders-outbox-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "order-postgres",
+    "database.port": "5432",
+    "database.user": "order-user",
+    "database.password": "order1234",
+    "database.dbname": "orders",
+    "topic.prefix": "v1",
+    "schema.include.list": "orders",
+    "table.include.list": "orders.orders_outbox",
+    "plugin.name": "pgoutput",
+    "slot.name": "postgres_debezium",
+    "publication.name": "orders_outbox_publication",
+    "publication.autocreate.mode": "disabled",
+    "heartbeat.interval.ms": "5000",
+    "heartbeat.action.query": "UPDATE orders.heartbeat_table SET updated_at = now() WHERE id = 1",
+    "tombstones.on.delete": "false",
+    "transforms": "unwrap,SetValueSchema",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.SetValueSchema.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
+    "transforms.SetValueSchema.schema.name": "ru.leeeny.restaurant.AvroOrderPlacedEvent",
+    "predicates": "ordersTopic",
+    "predicates.ordersTopic.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
+    "predicates.ordersTopic.pattern": "v1.orders.orders_outbox",
+    "transforms.SetValueSchema.predicate": "ordersTopic",
+
+    "transforms.unwrap.drop.tombstones": "true",
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081"
+  }
+}

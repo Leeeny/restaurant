@@ -13,12 +13,14 @@ import ru.leeeny.ordersservice.dto.CreateOrderRequest;
 import ru.leeeny.ordersservice.dto.GetMenuInfoRequest;
 import ru.leeeny.ordersservice.dto.OrderResponse;
 import ru.leeeny.ordersservice.dto.SortBy;
+import ru.leeeny.ordersservice.entity.OrderStatus;
 import ru.leeeny.ordersservice.exception.OrderServiceException;
 import ru.leeeny.ordersservice.mapper.OrderMapper;
 import ru.leeeny.ordersservice.mapper.OrderOutboxMapper;
 import ru.leeeny.ordersservice.repository.MenuOrderRepository;
 import ru.leeeny.ordersservice.repository.OrderPlacedEventRepository;
 import ru.leeeny.ordersservice.service.MenuOrderService;
+import ru.leeeny.restaurant.OrderDispatchedEvent;
 
 @Slf4j
 @Service
@@ -55,6 +57,12 @@ public class MenuOrderServiceImpl implements MenuOrderService {
 				.withSort(sortBy.getSort());
 		return menuOrderRepository.findAllByCreatedBy(username, pageRequest)
 				.map(orderMapper::mapToResponse);
+	}
+
+	@Transactional
+	public Mono<Void> updateOrder(OrderDispatchedEvent event) {
+		return menuOrderRepository.updateStatusById(event.getOrderId(), OrderStatus.valueOf(event.getStatus().name()))
+				.then();
 	}
 
 	private Throwable handleThrowable(Throwable t) {

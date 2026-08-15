@@ -3,7 +3,7 @@ plugins {
     id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.github.ben-manes.versions") version "0.52.0"
-
+    id("com.github.davidmc24.gradle.plugin.avro") version "1.9.1"
 }
 
 group = "ru.leeeny"
@@ -16,15 +16,21 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://packages.confluent.io/maven/")
+    }
 }
 
 val springdocVersion by extra("2.5.0")
 val flywayVersion by extra("13.0.0")
 val postgresqlVersion by extra("42.7.13")
 val r2dbcPostgresqlVersion by extra("1.1.2.RELEASE")
-val okhttp3Version by extra("5.4.0")
+val okhttp3Version by extra("4.12.0")
 val wiremockStandaloneVersion by extra("3.13.2")
 val springCloudDependenciesVersion by extra("2025.1.2")
+
+val avroVersion by extra("1.12.1")
+val avroSerializerVersion by extra("8.2.1")
 
 dependencyManagement {
     imports {
@@ -38,18 +44,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-flyway")
-
+    implementation("org.springframework.boot:spring-boot-starter-kafka")
     implementation("org.springframework:spring-jdbc")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
-
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$springdocVersion")
-
-    // implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
-
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.postgresql:r2dbc-postgresql:$r2dbcPostgresqlVersion")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("io.confluent:kafka-avro-serializer:$avroSerializerVersion")
+    implementation("org.apache.avro:avro:$avroVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -64,6 +69,8 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3Version")
     testImplementation("org.wiremock:wiremock-standalone:$wiremockStandaloneVersion")
+    //testImplementation("org.springframework.kafka:spring-kafka-test")
+    //testImplementation("org.testcontainers:kafka")
 
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")

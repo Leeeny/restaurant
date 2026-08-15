@@ -1,5 +1,5 @@
 # List of services, each has its own gradle wrapper
-SERVICES := menu-service orders-service reviews-service menu-aggregate-service cloud-config
+SERVICES := menu-service orders-service reviews-service menu-aggregate-service cloud-config dispatcher-service
 
 COMPOSE_FILE ?= docker-compose.yml
 

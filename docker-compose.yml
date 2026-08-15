@@ -167,6 +167,28 @@ services:
       timeout: 5s
       retries: 30
 
+  dispatcher-service:
+    build:
+      context: ./dispatcher-service
+    container_name: "dispatcher-service"
+    ports:
+      - "8096:8096"
+    networks: [ backend ]
+    depends_on:
+      kafka:
+        condition: service_healthy
+      schema-registry:
+        condition: service_started
+    environment:
+      KAFKA_SERVER_URL: kafka
+      KAFKA_SERVER_PORT: 29092
+      SERVICE_REGISTRY_URL: schema-registry
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8096/actuator/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
   kafka:
     image: apache/kafka:3.8.0
     container_name: kafka

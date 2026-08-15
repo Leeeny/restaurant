@@ -12,7 +12,11 @@ public class TestcontainersConfiguration {
 	@Bean
 	@ServiceConnection
 	PostgreSQLContainer postgresContainer() {
-		return new PostgreSQLContainer(DockerImageName.parse("postgres:17"));
+		return new PostgreSQLContainer(DockerImageName.parse("postgres:17"))
+				.withCommand(
+						"postgres",
+						"-c", "wal_level=logical"
+				);
 	}
 
 }

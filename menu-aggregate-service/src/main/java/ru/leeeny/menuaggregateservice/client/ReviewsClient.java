@@ -25,7 +25,7 @@ public class ReviewsClient extends BaseClient {
 
 	public ReviewsClient(WebClient.Builder webClientBuilder, ExternalServiceProps props) {
 		super(props);
-		webClient = WebClient.builder()
+		webClient = webClientBuilder
 				.baseUrl(props.getReviewServiceUrl())
 				.build();
 	}

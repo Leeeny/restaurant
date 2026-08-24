@@ -44,3 +44,8 @@ kafkaprops:
   replication-factor: 1
   partitions-count: 3
   nack-sleep-duration: 100ms
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVICE_URL:localhost}:8761/eureka/

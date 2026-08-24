@@ -18,6 +18,7 @@ java {
 val avroVersion = "1.12.1"
 val avroSerializerVersion = "8.2.1"
 val springRetryVersion = "2.0.13"
+val springCloudDependenciesVersion = "2025.1.2"
 
 repositories {
     mavenCentral()
@@ -26,9 +27,17 @@ repositories {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudDependenciesVersion}")
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-kafka")
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     implementation("org.springframework.retry:spring-retry:$springRetryVersion")
     implementation("io.confluent:kafka-avro-serializer:$avroSerializerVersion")

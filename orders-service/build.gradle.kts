@@ -52,6 +52,7 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.postgresql:r2dbc-postgresql:$r2dbcPostgresqlVersion")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("io.confluent:kafka-avro-serializer:$avroSerializerVersion")
     implementation("org.apache.avro:avro:$avroVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")

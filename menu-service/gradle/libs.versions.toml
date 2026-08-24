@@ -32,6 +32,7 @@ spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-st
 spring-boot-data-jpa-test = { module = "org.springframework.boot:spring-boot-data-jpa-test" }
 spring-boot-webtestclient = { module = "org.springframework.boot:spring-boot-webtestclient" }
 spring-cloud-starter-config = { module = "org.springframework.cloud:spring-cloud-starter-config" }
+spring-cloud-starter-netflix-eureka-client = { module = "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client" }
 
 spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
 

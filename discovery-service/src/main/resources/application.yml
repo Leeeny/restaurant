@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: discovery-service
+  config:
+    import:
+      - configserver:http://${CONFIG_SERVER_URL:localhost}:8090
+  cloud:
+    config:
+      label: master

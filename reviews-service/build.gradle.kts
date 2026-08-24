@@ -41,6 +41,7 @@ dependencies {
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapi")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     compileOnly("org.projectlombok:lombok")
 

@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.spring.boot.validation)
     implementation(libs.spring.boot.web)
     implementation(libs.spring.cloud.starter.config)
+    implementation(libs.spring.cloud.starter.netflix.eureka.client)
 
     implementation(libs.postgresql)
     implementation(libs.spring.boot.starter.flyway)

@@ -214,6 +214,28 @@ services:
       timeout: 5s
       retries: 30
 
+  gateway-service:
+    build:
+      context: ./gateway-service
+    container_name: "gateway-service"
+    ports:
+      - "8095:8095"
+    networks: [ backend, redis ]
+    depends_on:
+      redis:
+        condition: service_started
+      schema-registry:
+        condition: service_started
+    environment:
+      CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
+      SPRING_DATA_REDIS_HOST: redis
+      DISCOVERY_SERVICE_URL: discovery-service
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8095/actuator/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
   kafka:
     image: apache/kafka:3.8.0
     container_name: kafka
@@ -301,12 +323,25 @@ services:
       CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
 
+  redis:
+    image: redis:8-alpine
+    container_name: gateway-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - redis
 
 volumes:
   kafka_data:
+  redis-data:
 
 networks:
   backend:
   menu-db:
   order-db:
   review-db:
+  redis:
